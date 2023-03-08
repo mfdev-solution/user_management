@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { redirect } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import {updateOrAddUser} from '../services/UserService'
 
 const  UserForm =({initialForm , isEdit})=> {
-
-    const [form , setForm] = useState({
-      name:initialForm.name,
-      email:initialForm.email,
-      age:initialForm.age,
-      role:initialForm.role
-    })
+    const id = initialForm.id;
+    const [form , setForm] = useState({})
+useEffect(()=>{
+    setForm(initialForm)
+},[initialForm])
   const inputOnChange = (e)=>{
     const name = e.target.name;
     const value = e.target.value
@@ -22,16 +22,12 @@ const  UserForm =({initialForm , isEdit})=> {
     initialForm.age = form.age
     initialForm.role = form.role
     console.log(initialForm.name);
+    const idNew = isEdit?id:-1;
+    updateOrAddUser(idNew,form)
+    return redirect('/users')
     // (isEdit)?updateuser():addUser()
   }
-  const updateuser = () =>{
-    
-    
-  }
-  const addUser = () =>{
 
-
-  }
   return (
     
     <div className='container'>
@@ -40,7 +36,7 @@ const  UserForm =({initialForm , isEdit})=> {
               <form  onSubmit={(e) =>onSubmit(e)} className="form-floating">
               <div className="form-floating mb-3">
                 <input type="text" name='name' className="form-control" id="name" placeholder="Enter your name" value={form.name}  onChange={(e)=>{inputOnChange(e)}}/>
-                <label htmlFor="name">Your name {initialForm.name}</label>
+                <label htmlFor="name">Your name </label>
               </div>
               <div className="form-floating mb-3">
                 <input type="email" name='email' className="form-control" id="email" placeholder="Email" value={form.email} onChange={(e)=>{inputOnChange(e)}} />

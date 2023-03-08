@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Collapse, Nav, Navbar,Button, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import Users from '../models/users';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
+// import Users from '../models/users';
 
 const AppNavbar = () => {
 
