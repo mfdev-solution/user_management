@@ -1,9 +1,10 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom';
+import { isLoged } from '../services/auth_service';
 const  AuthGard = ({children}) =>{
-    const isLogged = false;
+    // const isLogged = true;
 
-    if(!isLogged){
+    if(!isLoged()){
         return <Navigate to={'/users/auth'} />
     }
   return children
