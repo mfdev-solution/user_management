@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserForm from "../components/UserForm";
 // import Users from '../models/users'
-import { GetUserById } from "../services/UserService";
+import { GetUserByIdAxios} from "../services/";
 const UserEdit = () => {
    const id = parseInt(useParams("id").id);
    const [user, setUser] = useState({});
@@ -10,7 +10,7 @@ const UserEdit = () => {
    // const newUser = Users.find(user => user.id === id)||null
    useEffect(() => {
       setIsLoading(true);
-      GetUserById(id).then((user) => setUser(user));
+      GetUserByIdAxios(id).then((user) => setUser(user));
       setIsLoading(false);
    }, [id]);
    console.log(user);

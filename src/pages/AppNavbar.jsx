@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { logout, isLoged } from "../services/auth_service";
+
+import { logout, isLoged } from "../services/";
 import {
    Collapse,
    Nav,
@@ -13,13 +14,17 @@ import {
 
 const AppNavbar = () => {
    const [isOpen, setIsOpen] = useState(false);
-
+   const toLogout = ()=>{
+      // logout(e);
+      logout()
+      window.location.replace('/users/auth')
+      window.location.reload()
+   }
    return (
       <Navbar color="dark" dark expand="md">
          {/* <NavbarBrand tag={Link} to="/">Home</NavbarBrand> */}
          {/* {console.log(UsersList)} */}
          <NavbarBrand>
-            {" "}
             <NavLink href="/"> Home</NavLink>
          </NavbarBrand>
          <NavbarToggler
@@ -43,7 +48,7 @@ const AppNavbar = () => {
                </NavItem>
                {isLoged() ? (
                   <NavItem>
-                     <NavLink onClick={logout}><span >LOGOUT</span></NavLink>
+                     <NavLink onClick={toLogout}><span >LOGOUT</span></NavLink>
                   </NavItem>
                ) : (
                   ""

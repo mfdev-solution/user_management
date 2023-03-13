@@ -2,21 +2,27 @@ import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 // import Users from '../models/users'
-import { GetUsers, deleUser } from "../services/UserService";
+import { GetUsersAxios,deleteUserAxios } from "../services/";
 export const UsersList = () => {
    //list of users
    const [userListNew, setUserListNew] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
+   
    useEffect(() => {
       setIsLoading(true);
-      GetUsers().then((users) => setUserListNew(users));
+      // window.location.reload()
+      //  GetUsersAxios();
+
+      GetUsersAxios()
+      .then((users) => setUserListNew(users))
+      .catch((err) =>console.log(err));
       setIsLoading(false);
    }, []);
    if (isLoading) {
       return <h2> data are loading ...</h2>;
    }
    const onDeleteUser = (e, id) => {
-      deleUser(e, id).then(
+      deleteUserAxios(e, id).then(
          (users) =>
             users !== null &&
             setUserListNew([...userListNew].filter((i) => i.id !== id))

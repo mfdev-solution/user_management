@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { saveToken } from "../services/auth_service";
+import { saveToken } from "../services/";
+import axios from "axios";
 
 const Authentication = () => {
    //  const [username, setUserName] = useState("");
@@ -20,13 +21,26 @@ const Authentication = () => {
 
    const onSubmit = (e) => {
       e.preventDefault();
-      if (credentials.username === "fall" && credentials.password === "fall") {
-         const token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImZhbGwiLCJpYXQiOjE1MTYyMzkwMjJ9.65txVXkAQ7jAzuxkr0lfiq68hFyoDW9KwYawy_pqqpc";
-         saveToken(token);
-         navigate("/users",{replace:true});
-         window.location.replace();
-      }
+      axios
+         .post("http://localhost:8080/api/v1/auth/authenticate", {
+            username: credentials.username,
+            password: credentials.password,
+         })
+         .then((res) => {
+          saveToken(res.data.token);
+
+          navigate("/users",{replace:true});
+         })
+         .catch((err) =>
+            console.log("authentication failed", err, credentials)
+         );
+      // if (credentials.username === "oumar@gmail.com" && credentials.password === "passer") {
+      //    const token =
+      //       "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdW1hckBnbWFpbC5jb20iLCJpYXQiOjE2Nzg0MzY1MjUsImV4cCI6MTY3ODQzNzk2NX0.1IlnxAYzGFq_qVtsTgEczgPf_oiXCjnaaNDHfJANyZw";
+      //    saveToken(token);
+      //    navigate("/users");
+      //    window.location.replace();
+      // }
       setMessage("Login ou mot de passe incorrect");
    };
 
