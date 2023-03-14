@@ -27,8 +27,14 @@ const UserForm = ({ initialForm, isEdit }) => {
       console.log(initialForm.name);
       form.id=id!==''?parseInt(id):0;
       const idNew = isEdit ? id : -1;
-      addOrUpdateUserAxios(idNew, form);
-      navigate('/users')
+      addOrUpdateUserAxios(idNew, form).then( res =>{
+         // console.log(res===403);
+         if(res === 403){
+            alert("Vous n'etes pas autorise a ajouter un utilisateur")
+         }
+         navigate('/users')
+      }
+      )
       // navigate('/users')
       // return redirect("/users");
       // (isEdit)?updateuser():addUser()

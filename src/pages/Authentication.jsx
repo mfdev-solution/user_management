@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { saveToken } from "../services/";
+import { Navigate, useNavigate } from "react-router-dom";
+import { saveToken, isLoged } from "../services/";
 import axios from "axios";
 
 const Authentication = () => {
@@ -27,22 +27,19 @@ const Authentication = () => {
             password: credentials.password,
          })
          .then((res) => {
-          saveToken(res.data.token);
+            saveToken(res.data.token);
 
-          navigate("/users",{replace:true});
+            navigate("/", { replace: true });
          })
          .catch((err) =>
             console.log("authentication failed", err, credentials)
          );
-      // if (credentials.username === "oumar@gmail.com" && credentials.password === "passer") {
-      //    const token =
-      //       "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdW1hckBnbWFpbC5jb20iLCJpYXQiOjE2Nzg0MzY1MjUsImV4cCI6MTY3ODQzNzk2NX0.1IlnxAYzGFq_qVtsTgEczgPf_oiXCjnaaNDHfJANyZw";
-      //    saveToken(token);
-      //    navigate("/users");
-      //    window.location.replace();
-      // }
+     
       setMessage("Login ou mot de passe incorrect");
    };
+   if (isLoged()) {
+      return <Navigate to={"/"} />;
+   }
 
    return (
       <form onSubmit={(e) => onSubmit(e)}>

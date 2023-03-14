@@ -14,4 +14,5 @@ let getToken = () =>{
 let isLoged = () => {
    return !!localStorage.getItem("token");
 };
+
 export { saveToken, logout, isLoged ,getToken };

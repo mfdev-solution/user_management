@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom';
-import { isLoged } from '../services/auth_service';
+import { isLoged } from '../services/';
 const  AuthGard = ({children}) =>{
     // const isLogged = true;
 

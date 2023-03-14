@@ -2,7 +2,6 @@
 // import { Navigate, useNavigate } from 'react-router-dom'
 import Axios from "./caller_service";
 const baseUrl = "http://localhost:8080/userapi";
-
 /**
  * By Axios API
  * Importing a list of users from the database
@@ -35,7 +34,8 @@ export const GetUsersAxios = async () => {
       const res = await Axios.get("http://localhost:8080/userapi/users");
       return res.data;
    } catch (err) {
-      return console.log(err);
+      window.location.replace('/user/auth')
+      localStorage.removeItem('token')
    }
 };
 
@@ -133,7 +133,7 @@ export const addOrUpdateUserAxios = (id, user) => {
    if (id === -1) {
       return Axios.post(`${baseUrl}/users`, user)
          .then((res) => res.data)
-         .catch((err) => err.message);
+         .catch((err) => err.response.status);
    }
    return Axios.put(`${baseUrl}/users/${id}`, user)
       .then((res) => res.data)

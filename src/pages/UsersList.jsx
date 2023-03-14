@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 // import Users from '../models/users'
-import { GetUsersAxios,deleteUserAxios } from "../services/";
-export const UsersList = () => {
+import { GetUsersAxios,deleteUserAxios   } from "../services/";
+export const UsersList = ({role}) => {
    //list of users
    const [userListNew, setUserListNew] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +15,7 @@ export const UsersList = () => {
 
       GetUsersAxios()
       .then((users) => setUserListNew(users))
-      .catch((err) =>console.log(err));
+      .catch(err=>err)
       setIsLoading(false);
    }, []);
    if (isLoading) {
@@ -23,15 +23,18 @@ export const UsersList = () => {
    }
    const onDeleteUser = (e, id) => {
       deleteUserAxios(e, id).then(
-         (users) =>
+         (users) =>{
+            
             users !== null &&
             setUserListNew([...userListNew].filter((i) => i.id !== id))
-      );
+         }
+      ).catch(err => console.log(err.response))
    };
 
    //show a user
    const userList = userListNew.map((user) => {
       return (
+      
          <tr key={user.id}>
             <td style={{ whiteSpace: "nowrap" }}>{user.name}</td>
             <td>{user.email}</td>
@@ -47,6 +50,7 @@ export const UsersList = () => {
                   >
                      Edit
                   </Button>
+                  {/* <span className=""><i className="material-icons">edit</i></span> */}
                   <Button
                      size="sm"
                      color="danger"
@@ -66,12 +70,12 @@ export const UsersList = () => {
         co
       </div> */}
          <div className="card-header">
-            <h3>Liste des utilisateur</h3>
-            <div className="float-end">
+            <h3>Liste des utilisateurs</h3>
+            {/* <div className="float-end">
                <Button color="success" tag={Link} to="/users/add">
                   Add User
                </Button>
-            </div>
+            </div> */}
          </div>
          <div className="card-body">
             <Table className="mt-4">
@@ -86,7 +90,17 @@ export const UsersList = () => {
                </thead>
                <tbody>{userList}</tbody>
             </Table>
+            {console.log(role)}
          </div>
+         {(role==="ADMIN")&&
+         <Link 
+          to={"/users/add"}
+          className="btn-floating btn-large waves-effect waves-light green z-depth-3" 
+          style={{position:'fixed',bottom:'25px',right:'25px'}}
+        >
+          <i className="material-icons">add</i>
+        </Link>
+         }
       </div>
    );
 };

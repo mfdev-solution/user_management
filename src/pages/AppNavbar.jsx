@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { logout, isLoged } from "../services/";
+import { logout, isLoged, loadUserByEmail } from "../services/";
 import {
    Collapse,
    Nav,
@@ -12,18 +12,29 @@ import {
 } from "reactstrap";
 // import Users from '../models/users';
 
-const AppNavbar = () => {
+const AppNavbar = ({role}) => {
+   // const [role, setRole] = useState()
    const [isOpen, setIsOpen] = useState(false);
-   const toLogout = ()=>{
+//   useEffect(()=>{
+//      async function fetchData(){
+//         const user =await loadUserByEmail(localStorage.getItem("token"))
+//         setRole(user.role);
+//      }
+//      fetchData()
+//   },[])
+// loadUserByEmail(localStorage.getItem("token")).then(user => setRole(user.role))
+   const toLogout = () => {
       // logout(e);
-      logout()
-      window.location.replace('/users/auth')
-      window.location.reload()
-   }
+      logout();
+      window.location.replace("/users/auth");
+      window.location.reload();
+   };
    return (
       <Navbar color="dark" dark expand="md">
          {/* <NavbarBrand tag={Link} to="/">Home</NavbarBrand> */}
-         {/* {console.log(UsersList)} */}
+         {
+            
+         }
          <NavbarBrand>
             <NavLink href="/"> Home</NavLink>
          </NavbarBrand>
@@ -41,15 +52,18 @@ const AppNavbar = () => {
                <NavItem>
                   <NavLink href="https://twitter.com/mfdev">@mfdev</NavLink>
                </NavItem>
-               <NavItem>
-                  <NavLink href="https://github.com/mfdev-solution">
-                     GitHub
-                  </NavLink>
-               </NavItem>
+               
                {isLoged() ? (
-                  <NavItem>
-                     <NavLink onClick={toLogout}><span >LOGOUT</span></NavLink>
-                  </NavItem>
+                  <>
+                     <NavItem>
+                        <NavLink onClick={toLogout}>
+                           <span>LOGOUT</span>
+                        </NavLink>
+                     </NavItem>
+                     <NavItem>
+                        {role}
+                     </NavItem>
+                  </>
                ) : (
                   ""
                )}
