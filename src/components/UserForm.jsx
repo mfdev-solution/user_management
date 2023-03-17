@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 // import { json, redirect, useNavigate } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import {  addOrUpdateUserAxios} from "../services/";
+import { useNavigate } from "react-router-dom";
+import { addOrUpdateUserAxios } from "../services/";
 
 const UserForm = ({ initialForm, isEdit }) => {
-  // const history = useHistory()
    const id = initialForm.id;
    const [form, setForm] = useState({});
    useEffect(() => {
@@ -16,28 +15,22 @@ const UserForm = ({ initialForm, isEdit }) => {
       const value = e.target.value;
       setForm({ ...form, [name]: value });
    };
-   const navigate = useNavigate()
+   const navigate = useNavigate();
    const onSubmit = (e) => {
       e.preventDefault();
-      // console.log(form.name);
       initialForm.name = form.name;
       initialForm.email = form.email;
       initialForm.age = form.age;
       initialForm.role = form.role;
       console.log(initialForm.name);
-      form.id=id!==''?parseInt(id):0;
+      form.id = id !== "" ? parseInt(id) : 0;
       const idNew = isEdit ? id : -1;
-      addOrUpdateUserAxios(idNew, form).then( res =>{
-         // console.log(res===403);
-         if(res === 403){
-            alert("Vous n'etes pas autorise a ajouter un utilisateur")
+      addOrUpdateUserAxios(idNew, form).then((res) => {
+         if (res === 403) {
+            alert("Vous n'etes pas autorise a ajouter un utilisateur");
          }
-         navigate('/users')
-      }
-      )
-      // navigate('/users')
-      // return redirect("/users");
-      // (isEdit)?updateuser():addUser()
+         navigate("/users");
+      });
    };
 
    return (

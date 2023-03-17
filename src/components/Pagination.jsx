@@ -13,7 +13,6 @@ const Pagination = ({
 
    return (
       <div className="col">
-         {/* {console.log(pages)} */}
          {pages.map((page, index) => {
             return (
                <button

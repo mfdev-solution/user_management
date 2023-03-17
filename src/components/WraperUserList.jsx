@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "reactstrap";
 import UsersList from "../pages/UsersList";
 import { GetUsersAxios } from "../services";
 import Pagination from "./Pagination";
 
 const WraperUserList = ({ role }) => {
-    // let nbUsers = 8;
    const [isLoading, setIsLoading] = useState(false);
    const [Listusers, setListUsers] = useState([]);
    const [currentPage, setcurrentPage] = useState(1);
@@ -13,8 +11,6 @@ const WraperUserList = ({ role }) => {
 
    useEffect(() => {
       setIsLoading(true);
-      // window.location.reload()
-      //  GetUsersAxios();
 
       GetUsersAxios()
          .then((users) => setListUsers(users))
@@ -34,10 +30,7 @@ const WraperUserList = ({ role }) => {
          <div className=" container">
             
             <div className="row">
-               {/* <Table className="mt-4"> */}
-               {/* <caption>Liste des utilisateurs</caption> */}
                <UsersList role={role} users={currentUsers} />
-               {/* </Table> */}
             </div>
             <div className="row">
                <Pagination
