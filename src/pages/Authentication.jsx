@@ -29,12 +29,12 @@ const Authentication = () => {
          .then((res) => {
             saveToken(res.data.token);
 
-            navigate("/", { replace: true });
+            navigate("/", {});
+            window.location.reload();
          })
          .catch((err) =>
             console.log("authentication failed", err, credentials)
          );
-     
       setMessage("Login ou mot de passe incorrect");
    };
    if (isLoged()) {

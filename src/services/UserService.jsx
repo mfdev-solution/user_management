@@ -135,7 +135,7 @@ export const addOrUpdateUserAxios = (id, user) => {
          .then((res) => res.data)
          .catch((err) => err.response.status);
    }
-   return Axios.put(`${baseUrl}/users/${id}`, user)
+   return Axios.patch(`${baseUrl}/users/${id}`, user)
       .then((res) => res.data)
       .catch((err) => err.message);
 };

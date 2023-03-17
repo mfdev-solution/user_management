@@ -4,10 +4,10 @@ const Axios = axios.create();
 
 Axios.interceptors.request.use((request) => {
    if (isLoged()) {
-      console.log("acceded");
+      // console.log("acceded");
       request.headers.Authorization = "Bearer " + getToken();
    }
-   console.log(request.headers.Authorization);
+   // console.log(request.headers.Authorization);
    return request;
 });
 

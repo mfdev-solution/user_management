@@ -5,7 +5,7 @@ import Layout from "./Layout";
 import PageNotFound from "./PageNotFound";
 import UserAdd from "./UserAdd";
 import UserEdit from "./UserEdit";
-import UsersList from "./UsersList";
+import WraperUserList from "../components/WraperUserList";
 
 // import {UsersList} from './rootExports'
 const UserRoute = ({ role }) => {
@@ -13,8 +13,8 @@ const UserRoute = ({ role }) => {
       <Routes>
          <Route>
             <Route element={<Layout />}>
-               <Route index element={<UsersList role={role} />} />
-               <Route path="/users" element={<UsersList role={role} />} />
+               <Route index element={<WraperUserList role={role} />} />
+               <Route path="/users" element={<WraperUserList role={role} />} />
                <Route path="/users/add" element={<UserAdd />} />
                <Route path="/users/edit/:id" element={<UserEdit />} />
                <Route path="*" element={<PageNotFound />} />
