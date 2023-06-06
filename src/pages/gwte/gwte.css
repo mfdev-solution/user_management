@@ -1,0 +1,7 @@
+.tab-pane-container{
+    display: flex;
+    justify-content: center;
+  }
+  .tab{
+    padding:0 15px;
+  }

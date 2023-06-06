@@ -1,0 +1,79 @@
+.add-demande-externe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    background-color: #f0f2f5;
+  }
+  
+  .add-demande-externe form {
+    width: 400px;
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .add-demande-externe h2 {
+    margin-bottom: 24px;
+    font-size: 24px;
+    text-align: center;
+    color: rgba(0, 151, 149, 0.9);
+  }
+  
+  .add-demande-externe .ant-form-item-label {
+    text-align: left;
+  }
+  
+  .add-demande-externe .ant-form-item-label > label {
+    font-weight: bold;
+  }
+  
+  .add-demande-externe .ant-picker {
+    width: 100%;
+  }
+  
+  .add-demande-externe .ant-input,.ant-input-number {
+    width: 100%;
+  }
+  
+  .add-demande-externe .ant-btn {
+    width: 100%;
+  }
+  
+  .add-demande-externe .ant-btn-primary {
+    background-color:rgba(0, 151, 149, 0.9);
+    border-color:rgba(0, 151, 149, 0.9);
+  }
+  
+
+  .add-demande-externe .ant-btn-primary:hover,
+.add-demande-externe .ant-btn-primary:focus {
+  background-color: rgba(0, 151, 149, 0.7);
+  border-color: rgba(0, 151, 149, 0.6);
+}
+
+.add-demande-externe .ant-btn-primary:active,
+.add-demande-externe .ant-btn-primary.active {
+  background-color: rgba(0, 151, 149, 0.9);
+  border-color: rgba(0, 151, 149, 0.9)
+}
+
+.add-demande-externe .ant-btn-primary:not([disabled]):hover,
+.add-demande-externe .ant-btn-primary:not([disabled]):focus {
+  color: #fff;
+}
+
+.add-demande-externe .ant-form-item-explain {
+  margin-top: 4px;
+}
+
+.add-demande-externe .ant-form-item-has-error .ant-form-item-explain {
+  color: #ff4d4f;
+}
+
+.add-demande-externe .ant-form-item-has-error .ant-input,
+.add-demande-externe .ant-form-item-has-error .ant-picker {
+  border-color: #ff4d4f;
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+}

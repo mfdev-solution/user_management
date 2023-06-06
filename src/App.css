@@ -1,3 +1,27 @@
+#root{
+  background-color: "#002140";
+}
 nav + .container, nav + .container-fluid {
     margin-top: 20px;
+  }
+
+  .ant-tabs-nav {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .ant-tabs-tab {
+    flex-grow: 1;
+    margin-right: 0px;
+    text-align: center;
+  }
+  
+  .ant-table-row {
+    font-size: 15px;
+    /* height: 64px; */
+  }
+  
+  .ant-table-tbody > tr.ant-table-row:hover > td,
+  .ant-table-tbody > tr > td.ant-table-cell-row-hover {
+    background-color: lightgray;
   }

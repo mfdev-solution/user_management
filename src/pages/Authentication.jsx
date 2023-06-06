@@ -1,99 +1,113 @@
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { saveToken, isLoged } from "../services/";
-import axios from "axios";
+import { Navigate } from "react-router-dom";
+import { isLoged } from "../services/";
 
+import { Layout, Input, Space } from "antd";
+import ModalAddStudentForm from "../components/ModalAddStudentForm";
+import sonatelImage from "../assets/images/sonatel1.jpg";
+import logogSonatel from "../assets/images/LOGO_SONATEL.png";
+
+import { render } from "@testing-library/react";
+import { Header } from "antd/es/layout/layout";
+import ImageCarousel from "../components/ImageCarousel";
+import { AuthenticationComponent } from "../components/AuthenticationComponent";
 const Authentication = () => {
-   //  const [username, setUserName] = useState("");
-   //  const [password, setPassword] = useState("");
-   const [message, setMessage] = useState();
-   const [credentials, setCredentials] = useState({
-      username: "",
-      password: "",
-   });
-   const navigate = useNavigate();
-   const onChange = (e) => {
-      setCredentials({
-         ...credentials,
-         [e.target.name]: e.target.value,
-      });
-   };
+   const { Content } = Layout;
 
-   const onSubmit = (e) => {
-      e.preventDefault();
-      axios
-         .post("http://localhost:8080/api/v1/auth/authenticate", {
-            username: credentials.username,
-            password: credentials.password,
-         })
-         .then((res) => {
-            saveToken(res.data.token);
+   const [authOped, setauthOped] = useState(false);
 
-            navigate("/", {});
-            window.location.reload();
-         })
-         .catch((err) =>
-            console.log("authentication failed", err, credentials)
-         );
-      setMessage("Login ou mot de passe incorrect");
-   };
    if (isLoged()) {
-      return <Navigate to={"/"} />;
+      return <Navigate to={"/gwte"} />;
    }
 
    return (
-      <form onSubmit={(e) => onSubmit(e)}>
-         <div className="container mt-5">
-            <div className="row">
-               <div className="col s12 m8 offset-m2">
-                  <div className="card hoverable">
-                     <div className="card-stacked">
-                        <div className="card-content">
-                           {/* Form message */}
-                           {message && (
-                              <div className="form-group">
-                                 <div className="card-panel grey lighten-5">
-                                    {message}
-                                 </div>
-                              </div>
-                           )}
-                           {/* Field username */}
-                           <div className="form-group">
-                              <label htmlFor="username">Identifiant</label>
-                              <input
-                                 id="username"
-                                 type="text"
-                                 name="username"
-                                 value={credentials.username}
-                                 className="form-control"
-                                 onChange={(e) => onChange(e)}
-                              ></input>
-                           </div>
-                           {/* Field password */}
-                           <div className="form-group">
-                              <label htmlFor="password">Mot de passe</label>
-                              <input
-                                 id="password"
-                                 type="password"
-                                 name="password"
-                                 value={credentials.password}
-                                 className="form-control"
-                                 onChange={(e) => onChange(e)}
-                              ></input>
-                           </div>
-                        </div>
-                        <div className="card-action center">
-                           {/* Submit button */}
-                           <button type="submit" className="btn">
-                              Valider
-                           </button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+      <Layout
+         style={{
+            backgroundImage: `url(${sonatelImage})`,
+            backgroundColor: "rgba(254,62,20,.4)",
+            backgroundSize: "cover",
+            backgroundPosition: "center center",
+            width: "100vw",
+            height: "100vh", // occupe toute la hauteur de l'écran
+         }}
+      >
+         <Header
+            style={{
+               zIndex: 9999,
+               width: "100vw",
+               position: "absolute",
+               backgroundColor: "#009791", //#f7640100
+               display: "flex",
+               justifyContent: "space-between",
+            }}
+         >
+            <Space>
+               <img
+                  style={{
+                     width: "150px",
+                     color: "#fff",
+                  }}
+                  src={logogSonatel}
+                  alt="logo"
+               />
+            </Space>
+            <Space style={{ display: "flex", columnGap: "30px" }}>
+               <Input
+                  style={{
+                     backgroundColor: "#fff", //f76401009791 009791 f76401
+                     color: "#009791",
+                     width: "200px",
+                     height: "40px",
+                     fontSize: 18,
+                     fontWeight: "bold",
+                     border: 0,
+                  }}
+                  type="button"
+                  value={"Connexion"}
+                  onClick={() => {
+                     render(<AuthenticationComponent opened={true} />);
+                  }}
+               />
+               <Input
+                  style={{
+                     backgroundColor: "#fff",
+                     color: "#009791",
+                     width: "200px",
+                     height: "40px",
+                     fontSize: 18,
+                     fontWeight: "bold",
+                     border: 0,
+                  }}
+                  type="button"
+                  value={"Demander Stage"}
+                  onClick={() => render(<ModalAddStudentForm open={true} />)}
+               />
+            </Space>
+         </Header>
+         <Content
+            style={{
+               display: "flex",
+               justifyContent: "center",
+               alignItems: "end",
+            }}
+         >
+            <div
+               style={{
+                  width: "50vw",
+                  height: "65vh",
+                  justifyContent: "center",
+                  borderRadius: "10px",
+                  margin: "50px",
+                  padding: "50px",
+                  color: "#FFF",
+                  fontWeight: "bold",
+                  fontSize: "30px",
+               }}
+            >
+               <ImageCarousel />
             </div>
-         </div>
-      </form>
+         </Content>
+      </Layout>
    );
 };
 export default Authentication;
