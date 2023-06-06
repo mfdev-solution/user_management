@@ -8,7 +8,8 @@ import { getAllAttestationByManager } from "../../services/ManagerService";
 export const ManagerDashboard = () => {
    const [demandeIntern, setDemandeIntern] = useState([]);
    const flag = useRef(false);
-   
+
+   var tab =[]
    useEffect(() => {
       if (flag.current === false) {
          getDemandeInterneStatsByManager().then((response) => {
@@ -17,7 +18,6 @@ export const ManagerDashboard = () => {
          });
 
          getAllAttestationByManager().then((response) => {
-            // console.log(response.data);
             response.data.map((attestation) =>
                console.log(attestation.contratStage.stagiaire.prenom)
             );
@@ -25,6 +25,7 @@ export const ManagerDashboard = () => {
       }
       return () => (flag.current = true);
    }, []);
+
 
    const total =
       demandeIntern.acceptee + demandeIntern.enCours + demandeIntern.rejetee;
@@ -42,35 +43,34 @@ export const ManagerDashboard = () => {
          },
       ],
    };
+
+
+
    const options2 = {
       responsive: true,
       tooltips: {
          callbacks: {
             label: function (tooltipItem, data) {
-               // Get the dataset for the current tooltip item
                const dataset = data.datasets[tooltipItem.datasetIndex];
-               // Get the total value for all data in the dataset
                const total = dataset.data.reduce(
                   (previousValue, currentValue) => previousValue + currentValue
                );
-               // Get the value for the current data point
                const currentValue = dataset.data[tooltipItem.index];
-               // Calculate the percentage value for the current data point
                const percentage = Math.floor(
                   (currentValue / total) * 100 + 0.5
                );
-               // Return the label with the percentage value
                return `${dataset.label}: ${currentValue} (${percentage}%)`;
             },
          },
       },
    };
-   function MySectorChart() {
-      <div>
-
-         <Doughnut data={data2} options={options2} />
-      </div>;
-   }
+   const MySectorChart = () => {
+      return (
+         <div>
+            <Doughnut data={data2} options={options2} />
+         </div>
+      );
+   };
    return (
       <div>
          <Space className="d-flex justify-content-evenly mt-5">
