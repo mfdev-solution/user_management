@@ -10,6 +10,7 @@ import {
    Typography,
    Avatar,
    Drawer,
+   Modal,
 } from "antd";
 import { useState } from "react";
 import {} from "./gwte/GwteDashboard";
@@ -24,8 +25,17 @@ const ALayout = () => {
    const [notificationsOpen, setNotificationsOpen] = useState(false);
    const naviger = useNavigate();
    const toLogout = () => {
-      logout();
-      naviger("/users/auth", { replace: true });
+      Modal.confirm({
+         title: "Cancel Contract",
+         content: "Deconnexion ?",
+         onOk: () => {
+            logout();
+            naviger("/users/auth", { replace: true });
+         },
+         onCancel: () => {
+            console.log("cancelled");
+         },
+      });
    };
    const [collapsed, setCollapsed] = useState(false);
    const {

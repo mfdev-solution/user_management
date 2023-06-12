@@ -8,18 +8,19 @@ export const GestionAttesttationPressence = () => {
    const [listAttestation, setListAttestations] = useState([]);
    const flag = useRef(false);
    const [loading, setLoading] = useState(true);
+   const [reducedData, setReducedData] = useState([]);
 
    const columns = [
-      {
-         title: "Prénom",
-         dataIndex: ["contratStage", "stagiaire", "prenom"], // Access nested property
-         key: "prenom",
-      },
-      {
-         title: "Nom",
-         dataIndex: ["contratStage", "stagiaire", "nom"], // Access nested property
-         key: "nom",
-      },
+      // {
+      //    title: "Prénom",
+      //    dataIndex: ["contratStage", "stagiaire", "prenom"], // Access nested property
+      //    key: "prenom",
+      // },
+      // {
+      //    title: "Nom",
+      //    dataIndex: ["contratStage", "stagiaire", "nom"], // Access nested property
+      //    key: "nom",
+      // },
       {
          title: "date de debut",
          dataIndex: "dateDebut",
@@ -99,6 +100,18 @@ export const GestionAttesttationPressence = () => {
             .then((response) => {
                // console.log(response.data);
                setListAttestations(response.data);
+               let datas = response.data;
+               setReducedData(
+                  datas.reduce((acc, item) => {
+                     const { nom, prenom } = item.contratStage.stagiaire;
+                     const idef = prenom + " " + nom;
+                     if (!acc[idef]) {
+                        acc[idef] = [];
+                     }
+                     acc[idef].push(item);
+                     return acc;
+                  }, {})
+               );
             })
             .catch((error) => {
                console.log(error);
@@ -107,5 +120,25 @@ export const GestionAttesttationPressence = () => {
       return () => (flag.current = true);
    }, []);
 
-   return <Table style={{}} dataSource={listAttestation} columns={columns} />;
+   return (
+      <>
+         <div
+            // style={{
+            //    display: "flex",
+            //    flexDirection: "column",
+            // }}
+            className="container-fluid mt-5"
+         >
+            <div className="row">
+               {Object.entries(reducedData).map(([key, item]) => (
+                  <div className="col-6 mb-5 ">
+                     {console.log(key)}
+                     <p style={{ textAlign: "center" }}>{key}</p>
+                     <Table dataSource={item} columns={columns} />
+                  </div>
+               ))}
+            </div>
+         </div>
+      </>
+   );
 };

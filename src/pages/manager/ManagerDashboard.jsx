@@ -1,81 +1,106 @@
-import React from "react";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { getDemandeInterneStatsByManager } from "../../services/StagiaireService";
-import { Doughnut } from "react-chartjs-2";
 import { Space } from "antd";
 import { getAllAttestationByManager } from "../../services/ManagerService";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+import { CategoryScale, LinearScale, BarElement, Title } from "chart.js";
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
 export const ManagerDashboard = () => {
    const [demandeIntern, setDemandeIntern] = useState([]);
+   const [attestations, setattestations] = useState([]);
    const flag = useRef(false);
-
-   var tab =[]
    useEffect(() => {
       if (flag.current === false) {
          getDemandeInterneStatsByManager().then((response) => {
-            console.log(response.data);
             setDemandeIntern(response.data);
          });
-
-         getAllAttestationByManager().then((response) => {
-            response.data.map((attestation) =>
-               console.log(attestation.contratStage.stagiaire.prenom)
-            );
-         });
+         getAllAttestationByManager()
+            .then((response) => {
+               const datas = response.data;
+               setattestations(
+                  datas.reduce((acc, item) => {
+                     const { nom, prenom } = item.contratStage.stagiaire;
+                     const idef = nom + " " + prenom;
+                     if (!acc[idef]) {
+                        acc[idef] = [];
+                     }
+                     acc[idef].push(item);
+                     return acc;
+                  }, {})
+               );
+            })
+            .catch((err) => {
+               console.log(err);
+            });
       }
       return () => (flag.current = true);
    }, []);
 
-
-   const total =
-      demandeIntern.acceptee + demandeIntern.enCours + demandeIntern.rejetee;
-   const data2 = {
-      labels: ["En cours", "Acceptee", "Rejetee"],
+   const data = {
+      labels: ["En cours ", "Acceptee", "Rejetee"],
       datasets: [
          {
+            label: "Attestations de presences",
             data: [
                demandeIntern.enCours,
                demandeIntern.acceptee,
                demandeIntern.rejetee,
             ],
             backgroundColor: ["#002140", "#009791", "#FF663E"],
-            hoverBackgroundColor: ["#002140", "#009791", "#FF663E"],
+            borderColor: ["#002140", "#009791", "#FF663E"],
+            borderWidth: 1,
          },
       ],
    };
 
+   const labels = Object.entries(attestations).map(
+      ([attestation, _]) => attestation
+   );
 
-
-   const options2 = {
+   const options = {
       responsive: true,
-      tooltips: {
-         callbacks: {
-            label: function (tooltipItem, data) {
-               const dataset = data.datasets[tooltipItem.datasetIndex];
-               const total = dataset.data.reduce(
-                  (previousValue, currentValue) => previousValue + currentValue
-               );
-               const currentValue = dataset.data[tooltipItem.index];
-               const percentage = Math.floor(
-                  (currentValue / total) * 100 + 0.5
-               );
-               return `${dataset.label}: ${currentValue} (${percentage}%)`;
-            },
+      plugins: {
+         legend: {
+            position: "top",
+         },
+         title: {
+            display: true,
+            text: "statistique des attestations ",
          },
       },
    };
-   const MySectorChart = () => {
-      return (
-         <div>
-            <Doughnut data={data2} options={options2} />
-         </div>
-      );
+
+   const data1 = {
+      labels,
+      datasets: [
+         {
+            label: "Nombre d'attestations par stagiaire",
+            data: Object.entries(attestations).map(([_, item]) => item.length),
+            backgroundColor: "#009791",
+         },
+      ],
    };
+
    return (
-      <div>
-         <Space className="d-flex justify-content-evenly mt-5">
-            <MySectorChart />
+      <Space
+         className="d-flex justify-content-around justify-items-center mt-5"
+         style={{
+            height: "60vh",
+            justifyItems: "center",
+         }}
+      >
+         <Space size={"large"}>
+            <Doughnut data={data} />
          </Space>
-      </div>
+         <Space size={"large"}>
+            <div style={{ width: "500px", height: "auto" }}>
+               <Bar options={options} data={data1} />;
+            </div>
+         </Space>
+      </Space>
    );
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from 'antd';
-import { SettingOutlined, AppstoreOutlined, CheckCircleOutlined, } from '@ant-design/icons';
+import { SettingOutlined, AppstoreOutlined, CheckCircleOutlined, MoneyCollectOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -12,14 +12,15 @@ function getItem(label, key, icon, children, type) {
         children,
         label,
         type,
-
     };
 }
 const items = [
     getItem('Historiques', '4', <AppstoreOutlined />),
     getItem('Validation', 'sub1', <CheckCircleOutlined />, [
-        getItem('Demandes', '1'), getItem('Suivi demandes', '2'),
+        getItem('Demandes', '1'),
+        getItem('Suivi demandes', '2'),
         getItem('gestion contrat', '3'),
+        getItem('Gestion payement', '7', <MoneyCollectOutlined />),
     ]),
     getItem('Demande interne', 'sub2', <AppstoreOutlined />, [
         getItem('List Demandes', '5'),
@@ -59,6 +60,8 @@ export const SideMenu = ({ collapse }) => {
             navigate("/gwte/demande-interne");
         } else if (key === "6") {
             navigate("/gwte/suivi-demande")
+        } else if (key === "7") {
+            navigate("/gwte/payment");
         }
     };
     const {
@@ -75,7 +78,6 @@ export const SideMenu = ({ collapse }) => {
             />
             <Menu theme="dark" color="#FFF" openKeys={openKeys}
                 onOpenChange={onOpenChange}
-                onClick={({ key }) => handleMenuClick(key)} defaultSelectedKeys={['1']} mode="inline" items={items} />
-
+                onClick={({ key }) => handleMenuClick(key)} defaultSelectedKeys={['4']} mode="inline" items={items} />
         </Sider>)
 }

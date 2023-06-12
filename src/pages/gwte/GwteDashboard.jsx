@@ -1,5 +1,7 @@
 import { Card, Layout, Progress, Space, Typography, theme } from "antd";
 import { useState, useEffect, useRef } from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { CategoryScale, LinearScale, BarElement, Title } from "chart.js";
 import { Outlet } from "react-router-dom";
 import {
    getDemandeInterneStats,
@@ -15,10 +17,13 @@ import {
    HourglassOutlined,
    PlusCircleOutlined,
 } from "@ant-design/icons";
+ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
 
 export const GwteDashboard = ({ user }) => {
    const { Content } = Layout;
    const [statsEtat, setStatsEtat] = useState({});
+   const [statsEtatReduced, setstatsEtatReduced] = useState([]);
    const [demandeInterne, setdemandeInterne] = useState({});
    const flag = useRef(false);
 
@@ -30,6 +35,8 @@ export const GwteDashboard = ({ user }) => {
       if (flag.current === false) {
          getStatsEtat().then((response) => {
             setStatsEtat(response.data);
+            let datas = response.data;
+            setstatsEtatReduced(datas.reduce((acc, item) => {}));
          });
          getDemandeInterneStats()
             .then((response) => {
@@ -48,9 +55,15 @@ export const GwteDashboard = ({ user }) => {
       statsEtat.rejete +
       statsEtat.enProposition +
       statsEtat.complet;
-
+   const labels = [
+      "en cours",
+      "accepte",
+      "rejete",
+      "en proposition",
+      "complet",
+   ];
    const data = {
-      labels: ["en cours", "accepte", "rejete", "en proposition", "complet"],
+      labels,
       datasets: [
          {
             label: "Histogramme des demandes de stage",
@@ -69,9 +82,13 @@ export const GwteDashboard = ({ user }) => {
    };
    const options = {
       responsive: true,
-      scales: {
-         y: {
-            beginAtZero: true,
+      plugins: {
+         legend: {
+            position: "bottom",
+         },
+         title: {
+            display: true,
+            text: "statistique des demande de stages ",
          },
       },
    };
@@ -89,6 +106,7 @@ export const GwteDashboard = ({ user }) => {
          },
       ],
    };
+
    const options2 = {
       responsive: true,
       tooltips: {
@@ -115,20 +133,17 @@ export const GwteDashboard = ({ user }) => {
             },
          },
       },
+      plugins: {
+         legend: {
+            position: "bottom",
+            display: "block",
+         },
+         title: {
+            display: true,
+            text: "statistique des demandes internes de stages ",
+         },
+      },
    };
-   function MySectorChart() {
-      <div>
-         <Doughnut data={data2} options={options2} />
-      </div>;
-   }
-   function MyBarChart() {
-      <>
-         <div className="header"></div>
-         <div style={{ width: "800px", height: "400px" }}>
-            <Bar data={data} options={options} />
-         </div>
-      </>;
-   }
 
    const DashboardCard = ({
       title,
@@ -243,9 +258,14 @@ export const GwteDashboard = ({ user }) => {
             </Space>
          </Space>
          <Space className="d-flex justify-content-evenly mt-5">
-            {/* {console.log(<MyBarChart />)} */}
-            <MyBarChart />
-            <MySectorChart />
+            <Space size={"large"}>
+               <div style={{ width: "500px", height: "auto" }}>
+                  <Bar options={options} data={data} />;
+               </div>
+            </Space>
+            <Space size={"large"}>
+               <Doughnut data={data2} options={options2} />
+            </Space>
          </Space>
          <Outlet />
       </Content>

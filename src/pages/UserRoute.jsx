@@ -23,6 +23,7 @@ import { GestionAttesttationPressence } from "./manager/GestionAttesttationPress
 import { DemandeInterne } from "./gwte/DemandeInterne";
 import { GestionDemandeIterne } from "./gwte/GestionDemandeIterne";
 import { AuthenticationComponent } from "../components/AuthenticationComponent";
+import { GestionPayement } from "./gwte/GestionPayement";
 
 const UserRoute = () => {
    return (
@@ -30,7 +31,6 @@ const UserRoute = () => {
          <Route index element={<Authentication />} />
          <Route>
             <Route element={<Layout />}>
-
                <Route path="admin/*" element={<ALayout />}>
                   <Route index element={<AdminDashboard />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
@@ -80,6 +80,7 @@ const UserRoute = () => {
                      path="suivi-demande"
                      element={<GestionDemandeIterne />}
                   />
+                  <Route path="payment" element={<GestionPayement />} />
                   <Route path="*" element={<PageNotFound />} />
                </Route>
 

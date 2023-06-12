@@ -1,7 +1,16 @@
 import { BellFilled, MailOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
 import { logout, isLoged } from "../services";
-import { Image, Layout, theme, Badge, Space, Typography, Avatar } from "antd";
+import {
+   Image,
+   Layout,
+   theme,
+   Badge,
+   Space,
+   Typography,
+   Avatar,
+   Modal,
+} from "antd";
 import { useState } from "react";
 import { SideMenu } from "../components/Manager/SideMenu";
 import logo_sonatel from "../assets/images/LOGO_SONATEL_1.png";
@@ -13,8 +22,17 @@ const MLayout = () => {
    const [notificationsOpen, setNotificationsOpen] = useState(false);
    const naviger = useNavigate();
    const toLogout = () => {
-      logout();
-      naviger("/users/auth", { replace: true });
+      Modal.confirm({
+         title: "Cancel Contract",
+         content: "Deconnexion ?",
+         onOk: () => {
+            logout();
+            naviger("/users/auth", { replace: true });
+         },
+         onCancel: () => {
+            console.log("cancelled");
+         },
+      });
    };
    const [collapsed, setCollapsed] = useState(false);
    const {

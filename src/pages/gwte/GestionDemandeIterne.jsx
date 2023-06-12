@@ -46,7 +46,6 @@ export const GestionDemandeIterne = () => {
       },
       {
          title: "Nom de la structure du manager",
-         //  dataIndex: "gwte.structure.nomStructure",
          key: "nomStructure",
          render: (_, contrat) => (
             <span>{contrat.stagiaire.manager.structure.nomStructure}</span>
