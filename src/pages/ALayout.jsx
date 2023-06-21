@@ -1,4 +1,9 @@
-import { BellFilled, MailOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+   BellFilled,
+   MailOutlined,
+   LogoutOutlined,
+   UnorderedListOutlined,
+} from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
 import { logout, isLoged } from "../services";
 import {
@@ -126,6 +131,11 @@ const ALayout = () => {
                      maxWidth: "100vw",
                      height: "50px",
                      backgroundColor: "#2d928e",
+                     display: "flex",
+                     justifyContent: "start",
+                     paddingLeft: 10,
+                     justifyItems: "center",
+                     color: "white",
                   }}
                ></div>
                <div

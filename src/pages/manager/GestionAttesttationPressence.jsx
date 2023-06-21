@@ -9,18 +9,28 @@ export const GestionAttesttationPressence = () => {
    const flag = useRef(false);
    const [loading, setLoading] = useState(true);
    const [reducedData, setReducedData] = useState([]);
-
+   //    const etat = "enCours";
+   const getButtonType = (etat) => {
+      switch (etat) {
+         case "enCours":
+            return "#1890ff";
+         // case "valide":
+         //    return "#52c41a";
+         case "modifie":
+            return "#f5222d";
+         case "valide":
+            return "green";
+         default:
+            return "#ffffff";
+      }
+   };
+   const getButtonValue = (etat) => {
+      if (etat === "enCours") {
+         return "En cours";
+      }
+      return etat;
+   };
    const columns = [
-      // {
-      //    title: "Prénom",
-      //    dataIndex: ["contratStage", "stagiaire", "prenom"], // Access nested property
-      //    key: "prenom",
-      // },
-      // {
-      //    title: "Nom",
-      //    dataIndex: ["contratStage", "stagiaire", "nom"], // Access nested property
-      //    key: "nom",
-      // },
       {
          title: "date de debut",
          dataIndex: "dateDebut",
@@ -45,6 +55,22 @@ export const GestionAttesttationPressence = () => {
          key: "nomStruct",
       },
       {
+         title: "État",
+         dataIndex: "etatAttestationPresence",
+         key: "etatAttestationPresence",
+         render: (etatAttestationPresence) => (
+            <Button
+               style={{
+                  backgroundColor: getButtonType(etatAttestationPresence),
+                  color: "#fff",
+               }}
+               type={getButtonType(etatAttestationPresence)}
+            >
+               {getButtonValue(etatAttestationPresence)}
+            </Button>
+         ),
+      },
+      {
          title: "Action",
          key: "action",
          render: (text, record) => (
@@ -62,6 +88,11 @@ export const GestionAttesttationPressence = () => {
                      color: "white",
                   }}
                   onClick={() => download(record)}
+                  disabled={
+                     record.etatAttestationPresence === "valide"
+                        ? ""
+                        : "disabled"
+                  }
                >
                   Télécharger
                </Button>
@@ -98,7 +129,6 @@ export const GestionAttesttationPressence = () => {
       if (flag.current === false) {
          getAllAttestationByManager()
             .then((response) => {
-               // console.log(response.data);
                setListAttestations(response.data);
                let datas = response.data;
                setReducedData(
@@ -123,16 +153,12 @@ export const GestionAttesttationPressence = () => {
    return (
       <>
          <div
-            // style={{
-            //    display: "flex",
-            //    flexDirection: "column",
-            // }}
             className="container-fluid mt-5"
          >
             <div className="row">
                {Object.entries(reducedData).map(([key, item]) => (
                   <div className="col-6 mb-5 ">
-                     {console.log(key)}
+                     {console.log(item)}
                      <p style={{ textAlign: "center" }}>{key}</p>
                      <Table dataSource={item} columns={columns} />
                   </div>

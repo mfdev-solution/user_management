@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from 'antd';
-import { SettingOutlined, AppstoreOutlined, CheckCircleOutlined, MoneyCollectOutlined } from '@ant-design/icons';
+import { SettingOutlined, AppstoreOutlined, CheckCircleOutlined, MoneyCollectOutlined, BarChartOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -15,7 +15,7 @@ function getItem(label, key, icon, children, type) {
     };
 }
 const items = [
-    getItem('Historiques', '4', <AppstoreOutlined />),
+    getItem('Historiques', '4', <BarChartOutlined />),
     getItem('Validation', 'sub1', <CheckCircleOutlined />, [
         getItem('Demandes', '1'),
         getItem('Suivi demandes', '2'),

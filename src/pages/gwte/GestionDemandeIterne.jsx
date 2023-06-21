@@ -4,6 +4,8 @@ import {
    cancelPropostionStage,
    getAllPropositionStageGwte,
 } from "../../services/contratStage";
+import { SendOutlined } from "@ant-design/icons";
+
 import { formatDate } from "../../utils/dateFormat";
 import { render } from "@testing-library/react";
 import { EditContrat } from "../../components/contrat/EditContrat";
@@ -113,11 +115,30 @@ export const GestionDemandeIterne = () => {
    return (
       <>
          {listProposition ? (
-            <Table
-               columns={columns}
-               dataSource={listProposition}
-               loading={loading}
-            />
+            <>
+               <div
+                  style={{
+                     maxWidth: "100vw",
+                     height: "50px",
+                     backgroundColor: "#2d928e",
+                     display: "flex",
+                     justifyContent: "start",
+                     paddingLeft: 10,
+                     justifyItems: "center",
+                     color: "white",
+                  }}
+               >
+                  <Space style={{ fontSize: 17 }}>
+                     <SendOutlined />
+                     List des propositions de stage
+                  </Space>
+               </div>
+               <Table
+                  columns={columns}
+                  dataSource={listProposition}
+                  loading={loading}
+               />
+            </>
          ) : (
             <Empty />
          )}

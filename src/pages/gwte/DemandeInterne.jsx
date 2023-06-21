@@ -4,6 +4,7 @@ import {
    getAllDemandesInternes,
    updateDemandeInterne,
 } from "../../services/DemandeInternService";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import { formatDate, dateFormatFront } from "../../utils/dateFormat";
 import "../../assets/css/DemandInternList.css";
 
@@ -184,6 +185,23 @@ export const DemandeInterne = () => {
    ];
    return (
       <div className="">
+         <div
+            style={{
+               maxWidth: "100vw",
+               height: "50px",
+               backgroundColor: "#2d928e",
+               display: "flex",
+               justifyContent: "start",
+               paddingLeft: 10,
+               justifyItems: "center",
+               color: "white",
+            }}
+         >
+            <Space style={{ fontSize: 17 }}>
+               <UsergroupAddOutlined />
+               List des demandes internes de stages
+            </Space>
+         </div>
          <Table
             dataSource={demandesInternes}
             scroll={{ x: true }}

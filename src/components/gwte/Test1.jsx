@@ -4,6 +4,7 @@ import {
    getInternApplications,
    updateInternv1,
 } from "../../services/StagiaireService";
+import { UnorderedListOutlined } from "@ant-design/icons";
 import { render } from "@testing-library/react";
 import AddManagerToIntern from "../AddManagerToIntern";
 import { AddRegistrationNumberToIntern } from "./AddRegistrationNumberToIntern";
@@ -30,7 +31,6 @@ export const Test1 = () => {
       }
       return () => (flag.current = true);
    }, []);
-
    const handleUpdate = (stagiaireparam) => {
       stagiaireparam.manager = null;
       stagiaireparam.structure = null;
@@ -117,7 +117,6 @@ export const Test1 = () => {
                >
                   Annuler
                </Button>
-
                {record.manager === null ? (
                   <>
                      <Button
@@ -172,7 +171,6 @@ export const Test1 = () => {
       console.log(value);
       setkeywordSh(value);
    };
-
    return (
       <>
          <div>
@@ -180,7 +178,6 @@ export const Test1 = () => {
                style={{
                   marginBottom: 25,
                   display: "flex",
-
                   justifyContent: "end",
                   justifyItems: "center",
                   columnGap: 30,
@@ -218,6 +215,23 @@ export const Test1 = () => {
                   }}
                />
             </Space>
+            <div
+               style={{
+                  maxWidth: "100vw",
+                  height: "50px",
+                  backgroundColor: "#2d928e",
+                  display: "flex",
+                  justifyContent: "start",
+                  paddingLeft: 10,
+                  justifyItems: "center",
+                  color: "white",
+               }}
+            >
+               <Space style={{ fontSize: 17 }}>
+                  <UnorderedListOutlined />
+                  Suivis des stagiaire
+               </Space>
+            </div>
             <Table
                loading={loading}
                dataSource={sortedstagiaires.filter(

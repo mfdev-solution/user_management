@@ -4,7 +4,12 @@ import {
    getInternApplications,
    exportToExcel,
 } from "../../services/StagiaireService";
-import { EyeFilled, PlusCircleFilled } from "@ant-design/icons";
+import {
+   EyeFilled,
+   PlusCircleFilled,
+   UnorderedListOutlined,
+   UserAddOutlined,
+} from "@ant-design/icons";
 import { render } from "@testing-library/react";
 import AddManagerToIntern from "../AddManagerToIntern";
 import { Link } from "react-router-dom";
@@ -152,6 +157,7 @@ export const Test = () => {
       },
    ];
    const sortedstagiaires = [...stagiaires].sort((a, b) => b.id - a.id);
+
    const rowKeys = selectedRows.map((row) => row.key);
    const handleRowSelection = (selectedRowKeys, selectedRows) => {
       setSelectedRows(selectedRows);
@@ -214,6 +220,23 @@ export const Test = () => {
                   }}
                />
             </Space>
+            <div
+               style={{
+                  maxWidth: "100vw",
+                  height: "50px",
+                  backgroundColor: "#2d928e",
+                  display: "flex",
+                  justifyContent: "start",
+                  paddingLeft: 10,
+                  justifyItems: "center",
+                  color: "white",
+               }}
+            >
+               <Space style={{ fontSize: 17 }}>
+                  <UnorderedListOutlined />
+                  List des nouveaux demandes de stages
+               </Space>
+            </div>
             <Table
                loading={loading}
                dataSource={sortedstagiaires
@@ -231,13 +254,13 @@ export const Test = () => {
                   onChange: handleRowSelection,
                }}
                pagination={{
-                  pageSize: 7,
+                  pageSize: 6,
                }}
             />
             <FloatButton
                shape="circle"
                type="primary"
-               icon={<PlusCircleFilled />}
+               icon={<UserAddOutlined />}
                style={{
                   right: 60,
                   width: 50,
@@ -245,11 +268,9 @@ export const Test = () => {
                   bottom: 52,
                }}
                onClick={() => {
-                  render(<AjouterStagiare opened={true} />);
+               render(<AjouterStagiare opened={true} />);
                }}
-            >
-               +
-            </FloatButton>
+            />
          </div>
          {!stagiaires && <Empty />}
       </>

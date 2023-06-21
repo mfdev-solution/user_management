@@ -23,7 +23,7 @@ export const ListDemandeStagiaire = () => {
             });
       }
       return () => (flag.current = true);
-   });
+   },[]);
    //    const etat = "enCours";
    const getButtonType = (etat) => {
       switch (etat) {

@@ -10,7 +10,7 @@ export const InternList = () => {
       if (flag.current === false) {
          setLoading(true);
 
-         getInternApplications("complet")
+         getInternApplications("accepte")
             .then((response) => {
                setInternList(response.data);
                setLoading(false);
