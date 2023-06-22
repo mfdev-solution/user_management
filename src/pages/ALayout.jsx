@@ -56,6 +56,9 @@ const ALayout = () => {
          <Layout className="site-layout">
             <Header
                style={{
+                  position: "sticky",
+                  zIndex: 1,
+                  width: "100%",
                   height: 70,
                   display: "flex",
                   justifyContent: "space-between",

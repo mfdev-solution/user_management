@@ -8,3 +8,17 @@ export const getAllPayment = async () => {
       return error;
    }
 };
+export const getAllPayementByEtat = async (etat) => {
+   try {
+      return await Axios.get(`${baseUrl}etat/${etat}`);
+   } catch (error) {
+      return error;
+   }
+};
+export const updatePayment = async (payment) => {
+   try {
+      return await Axios.put(`${baseUrl}${payment.id}`, payment);
+   } catch (error) {
+      return error;
+   }
+};

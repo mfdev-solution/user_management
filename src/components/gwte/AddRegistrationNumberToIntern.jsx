@@ -6,7 +6,7 @@ export const AddRegistrationNumberToIntern = ({ id, open, onClosed }) => {
    const [form] = Form.useForm();
    const [opened, setOpened] = useState(open);
    const handleSubmit = (values) => {
-      updateIntern(id, { matricule: values.matricule, etat: "complet" })
+      updateIntern(id, { matricule: values.matricule, etat: "accepte" })
          .then((response) => {
             console.log(response);
             onClosed();

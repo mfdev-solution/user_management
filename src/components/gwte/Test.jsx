@@ -10,6 +10,8 @@ import {
    UnorderedListOutlined,
    UserAddOutlined,
 } from "@ant-design/icons";
+import "./test.css";
+
 import { render } from "@testing-library/react";
 import AddManagerToIntern from "../AddManagerToIntern";
 import { Link } from "react-router-dom";
@@ -179,64 +181,70 @@ export const Test = () => {
                   justifyItems: "center",
                   columnGap: 30,
                }}
-            >
-               {selectedRows && selectedRows.length > 0 && (
-                  <Button
-                     type="primary"
-                     ghost
-                     onClick={() => {
-                        handleDownload();
-                     }}
-                     loading={loadingExport}
-                     style={{
-                        display: "flex",
-                        width: "auto",
-                        height: "auto",
-                        paddingTop: "4px",
-                        paddingBottom: "4px",
-                        paddingLeft: "15px",
-                        paddingRight: "15px",
-                        justifyContent: "space-between",
-                        backgroundColor: "#2d928e",
-                        color: "#FFF",
-                        fontSize: 17,
-                        borderColor: "#FFF",
-                     }}
-                  >
-                     <img src={icon} alt="excel export" />
-                     Export Excel
-                  </Button>
-               )}
-               <Search
-                  type="primary"
-                  color="#2d928e"
-                  onChange={(e) => {
-                     handleSearchChange(e.target.value);
-                  }}
-                  placeholder="search a name"
-                  style={{
-                     borderRadius: "10px",
-                     height: "auto",
-                  }}
-               />
-            </Space>
+            ></Space>
             <div
+               className="d-flex justify-content-between"
                style={{
                   maxWidth: "100vw",
                   height: "50px",
                   backgroundColor: "#2d928e",
                   display: "flex",
-                  justifyContent: "start",
                   paddingLeft: 10,
-                  justifyItems: "center",
                   color: "white",
+                  padding: 5,
                }}
             >
                <Space style={{ fontSize: 17 }}>
                   <UnorderedListOutlined />
                   List des nouveaux demandes de stages
                </Space>
+               <Space>
+                  {selectedRows && selectedRows.length > 0 && (
+                     <Button
+                        type="primary"
+                        ghost
+                        onClick={() => {
+                           handleDownload();
+                        }}
+                        loading={loadingExport}
+                        style={{
+                           display: "flex",
+                           width: "auto",
+                           height: "auto",
+                           paddingTop: "4px",
+                           paddingBottom: "4px",
+                           paddingLeft: "15px",
+                           paddingRight: "15px",
+                           justifyContent: "space-between",
+                           backgroundColor: "#2d928e",
+                           color: "#FFF",
+                           fontSize: 17,
+                           borderColor: "#FFF",
+                        }}
+                     >
+                        <img src={icon} alt="excel export" />
+                        Export Excel
+                     </Button>
+                  )}
+                  <Search
+                     type="primary"
+                     color="#2d928e"
+                     onChange={(e) => {
+                        handleSearchChange(e.target.value);
+                     }}
+                     placeholder="search a name"
+                     style={{
+                        borderRadius: "10px",
+                        height: "auto",
+                     }}
+                  />
+                  <Button icon={<UserAddOutlined />} className="button-92">
+                     {" "}
+                     {/* Ajouter */}
+                  </Button>
+               </Space>
             </div>
+
             <Table
                loading={loading}
                dataSource={sortedstagiaires
@@ -268,7 +276,7 @@ export const Test = () => {
                   bottom: 52,
                }}
                onClick={() => {
-               render(<AjouterStagiare opened={true} />);
+                  render(<AjouterStagiare opened={true} />);
                }}
             />
          </div>

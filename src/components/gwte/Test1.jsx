@@ -9,7 +9,6 @@ import { render } from "@testing-library/react";
 import AddManagerToIntern from "../AddManagerToIntern";
 import { AddRegistrationNumberToIntern } from "./AddRegistrationNumberToIntern";
 import { ImporteExcelFile } from "../ImporteExcelFile";
-
 export const Test1 = () => {
    const [stagiaires, setStagiaires] = useState([]);
    const flag = useRef(false);
@@ -59,16 +58,14 @@ export const Test1 = () => {
       }
    };
    const columns = [
+      {
+         title: "Matricule",
+         dataIndex: "matricule",
+         key: "matricule",
+      },
       { title: "Nom", dataIndex: "nom", key: "nom" },
       { title: "Prénom", dataIndex: "prenom", key: "prenom" },
-      {
-         title: "Lieu de naissance",
-         dataIndex: "lieuNaissance",
-         key: "lieuNaissance",
-      },
-      { title: "CNI", dataIndex: "cni", key: "cni" },
-      { title: "Adresse", dataIndex: "adresse", key: "adresse" },
-      { title: "Nationalité", dataIndex: "nationalite", key: "nationalite" },
+
       {
          title: "Formation en cours",
          dataIndex: "formationEnCours",
@@ -81,9 +78,21 @@ export const Test1 = () => {
          key: "niveauEtude",
       },
       {
-         title: "Diplôme obtenu",
-         dataIndex: "diplomeObtenu",
-         key: "diplomeObtenu",
+         title: "Structure",
+         key: "structure",
+         dataIndex: ["manager", "structure", "nomStructure"],
+         render: (structure) => <span>{structure}</span>,
+      },
+      {
+         title: "Manager",
+         key: "manager",
+         dataIndex: ["manager"],
+         render: (manager) => (
+            <span>
+               {" "}
+               {manager.firstName} {manager.lastName}
+            </span>
+         ),
       },
       {
          title: "État",
@@ -174,62 +183,52 @@ export const Test1 = () => {
    return (
       <>
          <div>
-            <Space
-               style={{
-                  marginBottom: 25,
-                  display: "flex",
-                  justifyContent: "end",
-                  justifyItems: "center",
-                  columnGap: 30,
-               }}
-            >
-               <Button
-                  type="primary"
-                  ghost
-                  onClick={() => {
-                     render(<ImporteExcelFile opened={true} key={"modal"} />);
-                  }}
-                  style={{
-                     display: "flex",
-                     width: "auto",
-                     height: "auto",
-                     padding: "10px 10px",
-                     justifyContent: "space-between",
-                     backgroundColor: "#2d928e",
-                     color: "#FFF",
-                     fontSize: 17,
-                     borderColor: "#FFF",
-                  }}
-               >
-                  importer fichier de validation
-               </Button>
-               <Search
-                  type="primary"
-                  color="#2d928e"
-                  onChange={(e) => {
-                     handleSearchChange(e.target.value);
-                  }}
-                  placeholder="search a name"
-                  style={{
-                     borderRadius: "10px",
-                  }}
-               />
-            </Space>
             <div
+               className="d-flex justify-content-between"
                style={{
                   maxWidth: "100vw",
                   height: "50px",
                   backgroundColor: "#2d928e",
-                  display: "flex",
-                  justifyContent: "start",
                   paddingLeft: 10,
-                  justifyItems: "center",
                   color: "white",
                }}
             >
+               {" "}
                <Space style={{ fontSize: 17 }}>
                   <UnorderedListOutlined />
                   Suivis des stagiaire
+               </Space>{" "}
+               <Space style={{}}>
+                  <Button
+                     type="primary"
+                     ghost
+                     onClick={() => {
+                        render(
+                           <ImporteExcelFile opened={true} key={"modal"} />
+                        );
+                     }}
+                     style={{
+                        width: "auto",
+                        height: "auto",
+                        backgroundColor: "#2d928e",
+                        color: "#FFF",
+                        fontSize: 17,
+                        borderColor: "#FFF",
+                     }}
+                  >
+                     importer fichier de validation
+                  </Button>
+                  <Search
+                     type="primary"
+                     color="#2d928e"
+                     onChange={(e) => {
+                        handleSearchChange(e.target.value);
+                     }}
+                     placeholder="search a name"
+                     style={{
+                        borderRadius: "10px",
+                     }}
+                  />
                </Space>
             </div>
             <Table

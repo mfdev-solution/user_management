@@ -68,7 +68,16 @@ export const SideMenu = ({ collapse }) => {
         token: { colorBgContainer },
     } = theme.useToken();
     return (
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}  >
+        <Sider
+            collapsible
+            collapsed={collapsed}
+            onCollapse={(value) => setCollapsed(value)}
+            style={{
+                position: 'sticky',
+                left: 0,
+                top: 0,
+                height: '100vh',
+            }} >
             <div
                 style={{
                     height: 32,

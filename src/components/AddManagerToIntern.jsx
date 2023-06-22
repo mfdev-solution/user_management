@@ -1,11 +1,11 @@
-import { Select, Form, Button, Modal, message, DatePicker,  } from "antd";
+import { Select, Form, Button, Modal, message, DatePicker } from "antd";
 
 import { useEffect, useRef, useState } from "react";
 import {
    getAllStructures,
    getManagersByStructure,
 } from "../services/StructureService";
-import {  addInternToMananer } from "../services/StagiaireService";
+import { addInternToMananer } from "../services/StagiaireService";
 import { dateFormat } from "../utils/dateFormat";
 const { Option } = Select;
 const AddManagerToIntern = ({ opened, id, onClosed, action }) => {

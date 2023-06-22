@@ -82,24 +82,51 @@ export const GestionAttesttationPressence = () => {
                   alignItems: "center",
                }}
             >
-               <Button
-                  style={{
-                     backgroundColor: "rgba(0,151,149,0.9)",
-                     color: "white",
-                  }}
-                  onClick={() => download(record)}
-                  disabled={
-                     record.etatAttestationPresence === "valide"
-                        ? ""
-                        : "disabled"
-                  }
-               >
-                  Télécharger
-               </Button>
+               {record.etatAttestationPresence === "modifie" && (
+                  <Button
+                     style={{
+                        backgroundColor: "rgba(255,5,5,0.9)",
+                        color: "white",
+                     }}
+                     onClick={() => modify(record)}
+                  >
+                     Modifier
+                  </Button>
+               )}
+               {record.etatAttestationPresence === "valide" && (
+                  <Button
+                     style={{
+                        backgroundColor: "rgba(0,151,149,0.9)",
+                        color: "white",
+                     }}
+                     onClick={() => download(record)}
+                     disabled={
+                        record.etatAttestationPresence === "valide"
+                           ? ""
+                           : "disabled"
+                     }
+                  >
+                     Télécharger
+                  </Button>
+               )}
+               {record.etatAttestationPresence === "enCours" && (
+                  <Button
+                     style={{
+                        backgroundColor: "rgba(0,151,149,0.9)",
+                        color: "white",
+                     }}
+                     onClick={() => console.log(record)}
+                  >
+                     en Attente
+                  </Button>
+               )}
             </Space>
          ),
       },
    ];
+   const modify = (values) => {
+      console.log("modified", values);
+   };
    const download = (values) => {
       const fileName =
          values.contratStage.stagiaire.nom +
@@ -152,9 +179,7 @@ export const GestionAttesttationPressence = () => {
 
    return (
       <>
-         <div
-            className="container-fluid mt-5"
-         >
+         <div className="container-fluid mt-5">
             <div className="row">
                {Object.entries(reducedData).map(([key, item]) => (
                   <div className="col-6 mb-5 ">
