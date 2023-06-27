@@ -126,6 +126,7 @@ export const DemandeInterne = () => {
          key: "etatDemandeInterne",
          render: (etatDemandeInterne) => (
             <Button
+               className="btn"
                style={{
                   backgroundColor: getButtonType(etatDemandeInterne),
                   color: "#fff",
@@ -160,6 +161,7 @@ export const DemandeInterne = () => {
                {record && record.etatDemandeInterne.includes("enCours") && (
                   <Space size={"middle"}>
                      <Button
+                        className="btn "
                         type="primary"
                         onClick={() => {
                            handleAccept(record);
@@ -169,6 +171,10 @@ export const DemandeInterne = () => {
                      </Button>
 
                      <Button
+                        style={{
+                           color: "#FFF",
+                        }}
+                        className="btn"
                         type="primary"
                         danger
                         onClick={() => {

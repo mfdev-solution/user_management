@@ -4,14 +4,20 @@ import {
    getAllPayment,
    updatePayment,
 } from "../../services/PaymentService";
-import { Button, Checkbox, Input, Space, Table } from "antd";
+import { Button, Checkbox, Form, Input, Modal, Space, Table } from "antd";
 import { formatDate } from "../../utils/dateFormat";
 import {
    UnorderedListOutlined,
    UserOutlined,
    CheckCircleFilled,
    CloseSquareFilled,
+   CloseCircleFilled,
 } from "@ant-design/icons";
+import { render } from "@testing-library/react";
+import {
+   addMessage,
+   messageModificationAtp,
+} from "../../services/MessageService";
 const { Search } = Input;
 export const GestionPayement = () => {
    const flag = useRef(false);
@@ -165,7 +171,11 @@ export const GestionPayement = () => {
                      // backgroundColor: "rgb(45, 146, 142)",
                      color: "#FFF",
                   }}
-                  onClick={() => console.log("rejected", record)}
+                  onClick={() => {
+                     render(
+                        <CancelPaymentModal opened={true} payment={record} />
+                     );
+                  }}
                   className="btn btn-labeled btn-danger"
                   icon={<CloseSquareFilled />}
                >
@@ -202,6 +212,9 @@ export const GestionPayement = () => {
       updatePayment(record)
          .then((response) => {
             console.log(response.data);
+            setListPayment(
+               listPayment.filter((payment) => payment.id !== response.data.id)
+            );
          })
          .catch((err) => {
             console.log(err);
@@ -267,5 +280,95 @@ export const GestionPayement = () => {
             showHeader
          />
       </div>
+   );
+};
+export const CancelPaymentModal = ({ opened, payment }) => {
+   const [form] = Form.useForm();
+   const { TextArea } = Input;
+   const [openModal, setOpenModal] = useState(opened);
+   const [message, setMessage] = useState("");
+   const handleClose = () => {
+      setOpenModal(false);
+   };
+   const handleSubmit = (values) => {
+      // console.log(values, payment);
+      payment.attestationPresence.etatAttestationPresence = "modifie";
+      const message = {
+         contenu: values.contenu,
+         attestationPresence: payment.attestationPresence,
+      };
+      messageModificationAtp(message)
+         .then((response) => {
+            console.log(response.data);
+         })
+         .catch((error) => {
+            console.log(error);
+         });
+
+      // console.log(message);
+   };
+   return (
+      <>
+         <Modal
+            title={
+               <h3
+                  style={{
+                     color: "rgb(45, 146, 142)",
+                  }}
+               >
+                  Cause du rejet
+               </h3>
+            }
+            closeIcon={
+               <CloseCircleFilled
+                  size={30}
+                  style={{
+                     color: "rgb(45, 146, 142)",
+                     backgroundColor: "#FFF",
+                  }}
+               />
+            }
+            width={500}
+            footer={null}
+            open={openModal}
+            onCancel={handleClose}
+         >
+            <Form form={form} onFinish={handleSubmit} layout="vertical">
+               <br />
+               <Form.Item
+                  name="contenu"
+                  rules={[
+                     {
+                        required: true,
+                     },
+                  ]}
+                  placeholder="Contenu"
+               >
+                  <TextArea
+                     rows={4}
+                     onChange={(e) => {
+                        setMessage(e.target.value);
+                     }}
+                     placeholder="Contenu du message"
+                  />
+               </Form.Item>
+               <Form.Item
+                  style={{ textAlign: "center" }}
+                  className="d-flex justify-content-center"
+               >
+                  {message.length > 0 && message.trim() !== "" && (
+                     <Button
+                        onClick={() => setOpenModal(false)}
+                        type="primary"
+                        htmlType="submit"
+                        className="btn btn-lg btn-primary pb-2"
+                     >
+                        Evoyer
+                     </Button>
+                  )}
+               </Form.Item>
+            </Form>
+         </Modal>
+      </>
    );
 };

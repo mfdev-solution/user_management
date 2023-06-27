@@ -9,7 +9,7 @@ export const AddRegistrationNumberToIntern = ({ id, open, onClosed }) => {
       updateIntern(id, { matricule: values.matricule, etat: "accepte" })
          .then((response) => {
             console.log(response);
-            onClosed();
+            onClosed(response.data);
          })
          .catch((err) => {
             console.log(err);

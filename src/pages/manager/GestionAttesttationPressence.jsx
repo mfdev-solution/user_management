@@ -60,6 +60,7 @@ export const GestionAttesttationPressence = () => {
          key: "etatAttestationPresence",
          render: (etatAttestationPresence) => (
             <Button
+               className="btn"
                style={{
                   backgroundColor: getButtonType(etatAttestationPresence),
                   color: "#fff",
@@ -84,6 +85,7 @@ export const GestionAttesttationPressence = () => {
             >
                {record.etatAttestationPresence === "modifie" && (
                   <Button
+                     className="btn"
                      style={{
                         backgroundColor: "rgba(255,5,5,0.9)",
                         color: "white",
@@ -95,6 +97,7 @@ export const GestionAttesttationPressence = () => {
                )}
                {record.etatAttestationPresence === "valide" && (
                   <Button
+                     className="btn"
                      style={{
                         backgroundColor: "rgba(0,151,149,0.9)",
                         color: "white",
@@ -111,6 +114,7 @@ export const GestionAttesttationPressence = () => {
                )}
                {record.etatAttestationPresence === "enCours" && (
                   <Button
+                     className="btn"
                      style={{
                         backgroundColor: "rgba(0,151,149,0.9)",
                         color: "white",
@@ -124,6 +128,7 @@ export const GestionAttesttationPressence = () => {
          ),
       },
    ];
+
    const modify = (values) => {
       console.log("modified", values);
    };

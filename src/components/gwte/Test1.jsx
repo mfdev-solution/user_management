@@ -52,6 +52,16 @@ export const Test1 = () => {
          stagiaires.filter((stagiaire) => stagiaire.id !== selectedId)
       );
    };
+   const onColose = (record) => {
+      setStagiaires(
+         stagiaires.map((stagiaire) => {
+            if (stagiaire.id === record.id) {
+               stagiaire.matricule = record.matricule;
+            }
+            return stagiaire;
+         })
+      );
+   };
    const getEtat = (etat) => {
       if (etat === "accepte") {
          return "Accepte";
@@ -65,7 +75,6 @@ export const Test1 = () => {
       },
       { title: "Nom", dataIndex: "nom", key: "nom" },
       { title: "Prénom", dataIndex: "prenom", key: "prenom" },
-
       {
          title: "Formation en cours",
          dataIndex: "formationEnCours",
@@ -120,8 +129,12 @@ export const Test1 = () => {
          render: (text, record) => (
             <Space size="middle">
                <Button
+                  style={{
+                     color: "#fff",
+                  }}
                   type="primary"
                   danger
+                  className="btn"
                   onClick={() => handleUpdate(record)}
                >
                   Annuler
@@ -145,10 +158,9 @@ export const Test1 = () => {
                      >
                         Ajouter Manager
                      </Button>
-                     console.log
                   </>
                ) : (
-                  ""
+                  " "
                )}
                {record.manager !== null && !record.matricule ? (
                   <Button
@@ -158,7 +170,7 @@ export const Test1 = () => {
                            <AddRegistrationNumberToIntern
                               open={true}
                               id={record.id}
-                              onClosed={handleColose}
+                              onClosed={onColose}
                            />
                         );
                      }}
@@ -242,7 +254,7 @@ export const Test1 = () => {
                )}
                columns={columns}
                pagination={{
-                  pageSize: 5, // Limite le nombre d'éléments affichés par page à 10
+                  pageSize: 5,
                   showSizeChanger: false,
                }}
             />

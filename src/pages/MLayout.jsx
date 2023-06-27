@@ -15,10 +15,12 @@ import { useState } from "react";
 import { SideMenu } from "../components/Manager/SideMenu";
 import logo_sonatel from "../assets/images/LOGO_SONATEL_1.png";
 import user from "../assets/user.png";
-
+import { MessageDrawer } from "../components/messages/MessageDrawer";
+import { getAllMessagesByManager } from "../services/MessageService";
+import { render } from "@testing-library/react";
 const { Header, Content } = Layout;
 const MLayout = () => {
-   const [, setCommentsOpen] = useState(false);
+   const [commentsOpen, setCommentsOpen] = useState(false);
    const [notificationsOpen, setNotificationsOpen] = useState(false);
    const naviger = useNavigate();
    const toLogout = () => {
@@ -76,7 +78,12 @@ const MLayout = () => {
                            marginLeft: 15,
                         }}
                         onClick={() => {
-                           setCommentsOpen(true);
+                           render(
+                              <MessageDrawer
+                                 open={true}
+                                 getAllMessages={getAllMessagesByManager}
+                              />
+                           );
                         }}
                      />
                   </Badge>
@@ -116,6 +123,8 @@ const MLayout = () => {
                   borderTopLeftRadius: 10,
                   borderTopRightRadius: 10,
                   background: colorBgContainer,
+                  overflow: "scroll",
+                  height: "80vh",
                }}
             >
                {" "}

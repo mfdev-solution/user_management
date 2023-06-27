@@ -1,11 +1,7 @@
-import {
-   BellFilled,
-   MailOutlined,
-   LogoutOutlined,
-   UnorderedListOutlined,
-} from "@ant-design/icons";
+import { BellFilled, MailOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
 import { logout, isLoged } from "../services";
+import user from "../assets/user.png";
 import {
    Image,
    Layout,
@@ -17,15 +13,17 @@ import {
    Drawer,
    Modal,
 } from "antd";
+import { MessageDrawer } from "../components/messages/MessageDrawer";
+import { MessageDrawerTabs } from "../components/messages/MessageDrawerTabs";
 import { useState } from "react";
 import {} from "./gwte/GwteDashboard";
 import { SideMenu } from "../components/admin/SideMenu";
 import logo_sonatel from "../assets/images/LOGO_SONATEL_1.png";
-import user from "../assets/user.png";
 import { AFooter } from "../components/admin/Footer";
-
+import { render } from "@testing-library/react";
+import { getAllMessagesBGwte } from "../services/MessageService";
 const { Header, Content } = Layout;
-const ALayout = () => {
+export const ALayout = () => {
    const [commentsOpen, setCommentsOpen] = useState(false);
    const [notificationsOpen, setNotificationsOpen] = useState(false);
    const naviger = useNavigate();
@@ -87,7 +85,12 @@ const ALayout = () => {
                            marginLeft: 15,
                         }}
                         onClick={() => {
-                           setCommentsOpen(true);
+                           render(
+                              <MessageDrawerTabs
+                                 open={true}
+                                 getAllMessages={getAllMessagesBGwte}
+                              />
+                           );
                         }}
                      />
                   </Badge>
@@ -127,6 +130,8 @@ const ALayout = () => {
                   borderTopLeftRadius: 10,
                   borderTopRightRadius: 10,
                   background: colorBgContainer,
+                  overflow: "scroll",
+                  height: "80vh",
                }}
             >
                <div
@@ -149,17 +154,7 @@ const ALayout = () => {
                   <Outlet />
                </div>
             </Content>
-            <Drawer
-               style={{
-                  marginTop: 70,
-               }}
-               title="Messages"
-               open={commentsOpen}
-               onClose={() => {
-                  setCommentsOpen(false);
-               }}
-               maskClosable
-            ></Drawer>
+
             <Drawer
                style={{
                   marginTop: 70,
@@ -175,4 +170,3 @@ const ALayout = () => {
       </Layout>
    );
 };
-export default ALayout;

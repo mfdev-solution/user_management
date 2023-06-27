@@ -114,6 +114,7 @@ export const Test = () => {
          render: (text, record) => (
             <Space size="middle">
                <Button
+                  className="btn"
                   onClick={() => {
                      render(
                         <AddManagerToIntern
@@ -132,6 +133,7 @@ export const Test = () => {
                   Ajouter Manager
                </Button>
                <Button
+                  className="btn"
                   onClick={() => {
                      render(
                         <AddManagerToIntern
@@ -150,7 +152,7 @@ export const Test = () => {
                   Proposer
                </Button>
                <Link to={`/gwte/stagiaire/profile/${record.id}`}>
-                  <Button type="primary">
+                  <Button className="btn" type="primary">
                      <EyeFilled />
                   </Button>
                </Link>

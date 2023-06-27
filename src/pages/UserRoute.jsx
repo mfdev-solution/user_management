@@ -6,7 +6,7 @@ import PageNotFound from "./PageNotFound";
 import { Test } from "../components/gwte/Test";
 import { AccessDenied } from "./AccessDenied";
 import { AdminDashboard } from "./Admin/AdminDashboard";
-import ALayout from "./ALayout";
+import { ALayout } from "./ALayout";
 import { EditUser } from "./Admin/user/EditUser";
 import { User } from "./Admin/user/User";
 import { AddUser } from "./Admin/user/AddUser";
