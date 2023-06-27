@@ -3,14 +3,18 @@ import { useEffect, useState, useRef } from "react";
 import {
    getInternApplications,
    exportToExcel,
+   getStatsEtat,
 } from "../../services/StagiaireService";
 import {
    EyeFilled,
-   PlusCircleFilled,
+   DownCircleFilled,
    UnorderedListOutlined,
    UserAddOutlined,
+   DownCircleOutlined,
+   ExclamationCircleFilled,
+   CheckCircleOutlined,
+   CheckOutlined,
 } from "@ant-design/icons";
-import "./test.css";
 
 import { render } from "@testing-library/react";
 import AddManagerToIntern from "../AddManagerToIntern";
@@ -25,6 +29,7 @@ export const Test = () => {
    const [loading, setLoading] = useState(true);
    const [selectedRows, setSelectedRows] = useState([]); // State for storing selected rows
    const [loadingExport, setloadingExport] = useState(false); //
+   const [status, setStatus] = useState([]);
    useEffect(() => {
       if (flag.current === false) {
          setLoading(true);
@@ -33,6 +38,16 @@ export const Test = () => {
             .then((response) => {
                setStagiaires(response.data);
                setLoading(false);
+            })
+            .catch((err) => {
+               console.log(err);
+            });
+         getStatsEtat()
+            .then((stats) => {
+               setStatus(stats.data);
+               // Object.entries(stats.data).forEach(([key, value]) => {
+               //    console.log(key + " : " + value);
+               // });
             })
             .catch((err) => {
                console.log(err);
@@ -65,13 +80,13 @@ export const Test = () => {
    const columns = [
       { title: "Nom", dataIndex: "nom", key: "nom" },
       { title: "Prénom", dataIndex: "prenom", key: "prenom" },
-      {
-         title: "Lieu de naissance",
-         dataIndex: "lieuNaissance",
-         key: "lieuNaissance",
-      },
+
       { title: "Adresse", dataIndex: "adresse", key: "adresse" },
-      { title: "Nationalité", dataIndex: "nationalite", key: "nationalite" },
+      {
+         title: "Nationalité",
+         dataIndex: "nationalite",
+         key: "nationalite",
+      },
       {
          title: "Formation en cours",
          dataIndex: "formationEnCours",
@@ -82,11 +97,13 @@ export const Test = () => {
          title: "Niveau d'études",
          dataIndex: "niveauEtude",
          key: "niveauEtude",
+         width: 200,
       },
       {
          title: "Diplôme obtenu",
          dataIndex: "diplomeObtenu",
          key: "diplomeObtenu",
+         width: 200,
       },
       {
          title: "État",
@@ -111,6 +128,7 @@ export const Test = () => {
       {
          title: "Action",
          key: "action",
+
          render: (text, record) => (
             <Space size="middle">
                <Button
@@ -128,6 +146,7 @@ export const Test = () => {
                   style={{
                      backgroundColor: "rgba(0,151,149,0.9)",
                      color: "white",
+                     fontSize: "12px",
                   }}
                >
                   Ajouter Manager
@@ -147,6 +166,7 @@ export const Test = () => {
                   style={{
                      backgroundColor: "rgba(0,151,149,0.9)",
                      color: "white",
+                     fontSize: "12px",
                   }}
                >
                   Proposer
@@ -158,6 +178,7 @@ export const Test = () => {
                </Link>
             </Space>
          ),
+         width: 100,
       },
    ];
    const sortedstagiaires = [...stagiaires].sort((a, b) => b.id - a.id);
@@ -172,18 +193,94 @@ export const Test = () => {
       console.log(value);
       setkeywordSh(value);
    };
+   const getIcon = (keyword) => {
+      switch (keyword) {
+         case "accepte":
+            return <DownCircleFilled style={{ color: "#fff" }} />;
+         case "rejete":
+            return <ExclamationCircleFilled style={{ color: "#fff" }} />;
+         case "complet":
+            return <DownCircleOutlined style={{ color: "#fff" }} />;
+         case "enProposition":
+            return <CheckCircleOutlined style={{ color: "#fff" }} />;
+
+         case "enCours":
+            return <CheckOutlined style={{ color: "#fff" }} />;
+
+         default:
+            break;
+      }
+   };
+   const getBackgroundColor = (key) => {
+      switch (key) {
+         case "enCours":
+            return "#1890ff";
+         case "enProposition":
+            return "#52c41a";
+         case "rejete":
+            return "#f5222d";
+         case "accepte":
+            return "green";
+         default:
+            return "#ffffff";
+      }
+   };
    return (
       <>
          <div>
             <Space
                style={{
-                  marginBottom: 25,
+                  marginBottom: 20,
                   display: "flex",
-                  justifyContent: "end",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
                   justifyItems: "center",
-                  columnGap: 30,
+                  columnGap: 60,
                }}
-            ></Space>
+               ClassName="d-flex justify-content-between"
+            >
+               {" "}
+               {Object.entries(status).map(([key, value]) => (
+                  <>
+                     {key !== "complet" && (
+                        <Space
+                           style={{
+                              width: "200px",
+                              height: 60,
+                              border: "1px solid gray",
+                              padding: 0,
+                           }}
+                           key={key}
+                        >
+                           <Space
+                              style={{
+                                 width: "60px",
+                                 height: 60,
+                                 border: "1px solid gray",
+                                 backgroundColor: getBackgroundColor(key),
+                                 display: "flex",
+                                 justifyContent: "center",
+                                 justifyItems: "center",
+                              }}
+                           >
+                              {getIcon(key)}
+                           </Space>
+                           <Space
+                              style={{
+                                 display: "flex",
+                                 justifyContent: "center",
+                                 justifyItems: "center",
+                                 width: 140,
+                              }}
+                           >
+                              {value}
+                              {key}
+                           </Space>
+                        </Space>
+                     )}
+                  </>
+               ))}
+            </Space>
             <div
                className="d-flex justify-content-between"
                style={{
@@ -242,11 +339,9 @@ export const Test = () => {
                   />
                   <Button icon={<UserAddOutlined />} className="button-92">
                      {" "}
-                     {/* Ajouter */}
                   </Button>
                </Space>
             </div>
-
             <Table
                loading={loading}
                dataSource={sortedstagiaires

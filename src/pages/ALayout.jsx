@@ -122,7 +122,7 @@ export const ALayout = () => {
             </Header>
             <Content
                style={{
-                  marginTop: "64px",
+                  marginTop: "44px",
                   marginLeft: "30px",
                   marginRight: "30px",
                   padding: 0,

@@ -69,14 +69,23 @@ export const GestionDemandeIterne = () => {
          render: (_, contrat) => (
             <Space>
                <Button
+                  className="btn"
                   type="primary"
                   onClick={() => {
                      render(<EditContrat data={contrat} open={true} key={1} />);
+                  }}
+                  style={{
+                     color: "#FFF",
+                     backgroundColor: "rgba(0,151,149,0.9)",
                   }}
                >
                   Modifier
                </Button>
                <Button
+                  className="btn"
+                  style={{
+                     color: "#FFF",
+                  }}
                   type="primary"
                   danger
                   onClick={() => handleCancel(contrat)}
