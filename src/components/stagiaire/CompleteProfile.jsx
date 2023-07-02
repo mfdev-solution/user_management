@@ -11,7 +11,17 @@ const ProfileView = () => {
    const [stagiaire, setStagiaire] = useState();
    const [editing, setEditing] = useState(false);
    const [updatedStagiaire, setUpdatedStagiaire] = useState({});
+   const getGerne = (genre) => {
+      switch (genre.toLowerCase()) {
+         case "f":
+            return "Femme";
+         case "m":
+            return "Homme";
 
+         default:
+            break;
+      }
+   };
    useEffect(() => {
       if (flag.current === false) {
          getAnInternById(id).then((response) => {
@@ -343,7 +353,7 @@ const ProfileView = () => {
                            />
                         ) : (
                            <span className="profile-value" style={valueStyle}>
-                              {stagiaire.genre}
+                              {getGerne(stagiaire.genre)}
                            </span>
                         )}
                      </div>

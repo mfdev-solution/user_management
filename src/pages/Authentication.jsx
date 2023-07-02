@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { isLoged } from "../services/";
 
-import { Layout, Input, Space } from "antd";
+import { Layout, Input, Space, Button } from "antd";
 import ModalAddStudentForm from "../components/ModalAddStudentForm";
 import sonatelImage from "../assets/images/sonatel1.jpg";
 import logogSonatel from "../assets/images/LOGO_SONATEL.png";
-
 import { render } from "@testing-library/react";
 import { Header } from "antd/es/layout/layout";
 import ImageCarousel from "../components/ImageCarousel";
 import { AuthenticationComponent } from "../components/AuthenticationComponent";
+import { LoginOutlined, BookOutlined } from "@ant-design/icons";
 const Authentication = () => {
    const { Content } = Layout;
 
@@ -52,7 +52,7 @@ const Authentication = () => {
                />
             </Space>
             <Space style={{ display: "flex", columnGap: "30px" }}>
-               <Input
+               <Button
                   style={{
                      backgroundColor: "#fff", //f76401009791 009791 f76401
                      color: "#009791",
@@ -61,27 +61,35 @@ const Authentication = () => {
                      fontSize: 18,
                      fontWeight: "bold",
                      border: 0,
+                     maxWidth: "auto",
                   }}
                   type="button"
-                  value={"Connexion"}
                   onClick={() => {
                      render(<AuthenticationComponent opened={true} />);
                   }}
-               />
-               <Input
+                  icon={<LoginOutlined />}
+               >
+                  Connexion
+               </Button>
+               <Button
                   style={{
                      backgroundColor: "#fff",
                      color: "#009791",
-                     width: "200px",
+                     width: "auto",
                      height: "40px",
                      fontSize: 18,
                      fontWeight: "bold",
                      border: 0,
                   }}
+                  icon={
+                     <BookOutlined style={{ fontSize: 24, color: "#009791" }} />
+                  }
                   type="button"
                   value={"Demander Stage"}
                   onClick={() => render(<ModalAddStudentForm open={true} />)}
-               />
+               >
+                  Demander Stage
+               </Button>
             </Space>
          </Header>
          <Content

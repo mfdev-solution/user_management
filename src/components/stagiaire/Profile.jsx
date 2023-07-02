@@ -8,6 +8,17 @@ const { Meta } = Card;
 
 const Profile = ({ stagiaire, open }) => {
    const [opened, setOpened] = useState(open);
+   const getGerne = (genre) => {
+      switch (genre.toLowerCase()) {
+         case "f":
+            return "Femme";
+         case "m":
+            return "Homme";
+
+         default:
+            break;
+      }
+   };
    return (
       <Modal
          style={{ top: 0 }}
@@ -82,9 +93,9 @@ const Profile = ({ stagiaire, open }) => {
                   </p>
                   <p>
                      <strong>Situation matrimoniale:</strong>{" "}
-                     {stagiaire.situationMatrimonial}
+                     {getGerne(stagiaire.situationMatrimonial)}
                   </p>
-                </Col>
+               </Col>
             </Row>
          </Card>
       </Modal>

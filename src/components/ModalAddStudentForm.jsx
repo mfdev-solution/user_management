@@ -19,27 +19,24 @@ const ModalAddStudentForm = ({ open }) => {
    const [form] = Form.useForm();
    const [isPedagogical, setIsPedagogical] = useState(false);
    const [fileList, setFileList] = useState([]);
+   const [modalOpen, setModalOpen] = useState(open);
 
    const handleInternChange = (values) => {
       if (values === "pedagogique") {
          // console.log(values,"yes");
-
          setIsPedagogical(true);
       }
    };
    const handleFileUpload = (file) => {
       const isFileValid =
          file.type === "application/pdf" || file.type === "application/msword";
-
       if (!isFileValid) {
          message.error("Veuillez importer un fichier PDF ou Word valide.");
       }
-
       return isFileValid;
    };
    const handleFileChange = (info) => {
       let fileList = [...info.fileList];
-
       // Limitez la liste des fichiers à un seul fichier
       fileList = fileList.slice(-1);
 
@@ -81,8 +78,6 @@ const ModalAddStudentForm = ({ open }) => {
       setModalOpen(false);
    };
 
-   const [modalOpen, setModalOpen] = useState(open);
-
    return (
       <Modal
          style={{
@@ -94,6 +89,13 @@ const ModalAddStudentForm = ({ open }) => {
          onCancel={() => setModalOpen(false)}
          footer={null}
       >
+         <div
+            style={{
+               width: "500px",
+               height: "30px",
+               backgroundColor: "999",
+            }}
+         ></div>
          <Form
             form={form}
             onFinish={handleSubmit}
@@ -322,8 +324,13 @@ const ModalAddStudentForm = ({ open }) => {
                   marginTop: "32px",
                }}
             >
-               <Button type="primary" htmlType="submit">
-                  Créer l'utilisateur
+               <Button
+                  type="primary"
+                  className="btn"
+                  style={{ backgroundColor: "#009791", color: "white" }}
+                  htmlType="submit"
+               >
+                  Envoyer la demande
                </Button>
             </div>
          </Form>

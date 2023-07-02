@@ -53,15 +53,8 @@ export const GwteDashboard = ({ user }) => {
       statsEtat.enCours +
       statsEtat.accepte +
       statsEtat.rejete +
-      statsEtat.enProposition +
-      statsEtat.complet;
-   const labels = [
-      "en cours",
-      "accepte",
-      "rejete",
-      "en proposition",
-      "complet",
-   ];
+      statsEtat.enProposition;
+   const labels = ["en cours", "accepte", "rejete", "en proposition"];
    const data = {
       labels,
       datasets: [
@@ -244,7 +237,7 @@ export const GwteDashboard = ({ user }) => {
                   borderColor={"outset #faad14"}
                   backgroundColor={"rgba(255,0,0,0.25)"}
                />
-               <DashboardCard
+               {/* <DashboardCard
                   icon={
                      <PlusCircleOutlined
                         style={{ fontSize: "50px", color: "#722ed1" }}
@@ -254,7 +247,7 @@ export const GwteDashboard = ({ user }) => {
                   value={statsEtat.complet}
                   borderColor={"inset #722ed1"}
                   backgroundColor={"rgba(255,0,0,0.25)"}
-               />
+               /> */}
             </Space>
          </Space>
          <Space className="d-flex justify-content-evenly mt-5">

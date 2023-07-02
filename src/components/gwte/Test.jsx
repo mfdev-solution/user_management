@@ -45,9 +45,6 @@ export const Test = () => {
          getStatsEtat()
             .then((stats) => {
                setStatus(stats.data);
-               // Object.entries(stats.data).forEach(([key, value]) => {
-               //    console.log(key + " : " + value);
-               // });
             })
             .catch((err) => {
                console.log(err);
@@ -196,17 +193,15 @@ export const Test = () => {
    const getIcon = (keyword) => {
       switch (keyword) {
          case "accepte":
-            return <DownCircleFilled style={{ color: "#fff" }} />;
+            return <DownCircleFilled style={{ color: "#fff" }} size={30} />;
          case "rejete":
             return <ExclamationCircleFilled style={{ color: "#fff" }} />;
          case "complet":
             return <DownCircleOutlined style={{ color: "#fff" }} />;
          case "enProposition":
             return <CheckCircleOutlined style={{ color: "#fff" }} />;
-
          case "enCours":
             return <CheckOutlined style={{ color: "#fff" }} />;
-
          default:
             break;
       }
@@ -256,7 +251,7 @@ export const Test = () => {
                               style={{
                                  width: "60px",
                                  height: 60,
-                                 border: "1px solid gray",
+                                 // border: "1px solid gray",
                                  backgroundColor: getBackgroundColor(key),
                                  display: "flex",
                                  justifyContent: "center",
@@ -337,9 +332,9 @@ export const Test = () => {
                         height: "auto",
                      }}
                   />
-                  <Button icon={<UserAddOutlined />} className="button-92">
+                  {/* <Button icon={<UserAddOutlined />} className="button-92">
                      {" "}
-                  </Button>
+                  </Button> */}
                </Space>
             </div>
             <Table

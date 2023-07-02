@@ -6,21 +6,11 @@ import {
    loadManagerByLogin,
    loadGwteByLogin,
 } from "../services";
+import logogSonatel from "../assets/images/LOGO_SONATEL.png";
 import { login } from "../services/User.Service";
-import {
-   Col,
-   Layout,
-   Row,
-   Image,
-   Button,
-   Modal,
-   Form,
-   Typography,
-   Space,
-   Input,
-} from "antd";
+
 // import useMessage from "antd/es/message/useMessage";
-import { message } from "antd";
+import { Modal, message } from "antd";
 
 export const AuthenticationComponent = ({ opened }) => {
    const [messageForm, setMessage] = useState();
@@ -80,23 +70,26 @@ export const AuthenticationComponent = ({ opened }) => {
    };
    return (
       <Modal
-         centered
+         // centered
          open={open}
          onOk={() => setopen(false)}
          onCancel={() => setopen(false)}
          footer={null}
          style={{
+            top: "15%",
+            right: "-35%",
             display: "inline-flex",
             height: "auto",
             width: "auto",
             padding: 0,
             margin: 0,
+            zIndex: 999999,
             background: "transparent",
          }}
       >
          <form
             style={{
-               height: "400px",
+               height: "auto",
                width: "500px",
                padding: 0,
                margin: 0,
@@ -124,6 +117,27 @@ export const AuthenticationComponent = ({ opened }) => {
                         >
                            Authentification
                         </h2>
+                     </div>
+                     <div
+                        style={{
+                           display: "flex",
+                           justifyContent: "center",
+                           justifyItems: "center",
+                           width: "auto",
+                           heighth: "auto",
+                           backgroundColor: "rgba(5,5,5,0.1)",
+                        }}
+                     >
+                        <img
+                           style={{
+                              width: "150px",
+                              color: "#fff",
+                              borderRadius: "25%",
+                              height: "auto",
+                           }}
+                           src={logogSonatel}
+                           alt="logo"
+                        />
                      </div>
                      <div className="card-body">
                         <div className="form-group">
