@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from 'antd';
-import { CheckCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, BarChartOutlined, TeamOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
 
 const items = [
-    { key: '1', label: 'Gestion stagiaires', icon: <CheckCircleOutlined /> },
-    { key: '2', label: 'Attestation de presence', icon: <CheckCircleOutlined /> },
-    { key: '3', label: 'Historiques', icon: <CheckCircleOutlined /> },
+    { key: '1', label: 'Gestion stagiaires', icon: <TeamOutlined style={{ fontSize: 24, color: "rgb(45, 146, 142)" }} /> },
+    { key: '2', label: 'Attestation de presence', icon: <CheckCircleOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} /> },
+    { key: '3', label: 'Historiques', icon: <BarChartOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} /> },
     // { key: '4', label: 'Historiques', icon: <CheckCircleOutlined /> },
 ];
 
@@ -53,6 +53,7 @@ export const SideMenu = ({ collapse }) => {
                 items={items}
                 onClick={({ key }) => handleMenuClick(key)}
                 defaultSelectedKeys={['1']}
+                activeKey="rgba(255, 255, 255, 0.2)"
             />
         </Sider>
     );

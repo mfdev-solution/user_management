@@ -123,11 +123,11 @@ export const ALayout = () => {
             <Content
                style={{
                   marginTop: "44px",
-                  marginLeft: "30px",
+                  marginLeft: "20px",
                   marginRight: "30px",
                   padding: 0,
                   minHeight: 280,
-                  borderTopLeftRadius: 10,
+                  borderTopLeftRadius: 5,
                   borderTopRightRadius: 10,
                   background: colorBgContainer,
                   overflow: "scroll",
@@ -137,7 +137,7 @@ export const ALayout = () => {
                <div
                   style={{
                      maxWidth: "100vw",
-                     height: "50px",
+                     height: "30px",
                      backgroundColor: "#2d928e",
                      display: "flex",
                      justifyContent: "start",

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Tag, Table, Empty } from "antd";
+import { Tag, Table, Empty, Space, Button } from "antd";
 import { getInternApplications } from "../../services/StagiaireService";
 import { useRef } from "react";
+import { addAttestationFinStage } from "../../services/AttestationFinStage";
 export const InternList = () => {
    const [internList, setInternList] = useState([null]);
    const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ export const InternList = () => {
       return () => (flag.current = true);
    }, []);
    const columns = [
+      { title: "Matricule", dataIndex: "matricule", key: "matricule" },
       { title: "Nom", dataIndex: "nom", key: "nom" },
       { title: "Prénom", dataIndex: "prenom", key: "prenom" },
       {
@@ -29,7 +31,6 @@ export const InternList = () => {
       },
       { title: "CNI", dataIndex: "cni", key: "cni" },
       { title: "Adresse", dataIndex: "adresse", key: "adresse" },
-      { title: "Nationalité", dataIndex: "nationalite", key: "nationalite" },
       {
          title: "Formation en cours",
          dataIndex: "formationEnCours",
@@ -52,9 +53,42 @@ export const InternList = () => {
          render: (etat) => <Tag color={"success"}>{etat}</Tag>,
          key: "etat",
       },
+      {
+         title: "Action",
+         key: "action",
+         render: (text, record) => (
+            <Space size="middle">
+               {record != null && (
+                  <>
+                     <Button
+                        type="primary"
+                        style={{ backgroundColor: "rgba(0,151,149,0.9)" }}
+                        onClick={() => validerContrat(record)}
+                     >
+                        valider fin contrat
+                     </Button>
+                  </>
+               )}
+            </Space>
+         ),
+      },
    ];
 
    const sortedInternList = [...internList].sort((a, b) => b.id - a.id);
+   const validerContrat = (contrat) => {
+      var attestation = {
+         etatAttestationFinStage: "enCours",
+         contratStage: contrat,
+      };
+      addAttestationFinStage(attestation)
+         .then((response) => {
+            console.log(response.data);
+            return response.data;
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   };
    return (
       <>
          {internList && internList.length > 0 ? (

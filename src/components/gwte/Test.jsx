@@ -210,12 +210,14 @@ export const Test = () => {
       switch (key) {
          case "enCours":
             return "#1890ff";
-         case "enProposition":
+         case "complet":
             return "#52c41a";
          case "rejete":
             return "#f5222d";
          case "accepte":
             return "green";
+         case "enProposition":
+            return "orange";
          default:
             return "#ffffff";
       }
@@ -225,7 +227,7 @@ export const Test = () => {
          <div>
             <Space
                style={{
-                  marginBottom: 20,
+                  marginBottom: 40,
                   display: "flex",
                   justifyContent: "center",
                   flexWrap: "wrap",
@@ -236,44 +238,40 @@ export const Test = () => {
             >
                {" "}
                {Object.entries(status).map(([key, value]) => (
-                  <>
-                     {key !== "complet" && (
-                        <Space
-                           style={{
-                              width: "200px",
-                              height: 60,
-                              border: "1px solid gray",
-                              padding: 0,
-                           }}
-                           key={key}
-                        >
-                           <Space
-                              style={{
-                                 width: "60px",
-                                 height: 60,
-                                 // border: "1px solid gray",
-                                 backgroundColor: getBackgroundColor(key),
-                                 display: "flex",
-                                 justifyContent: "center",
-                                 justifyItems: "center",
-                              }}
-                           >
-                              {getIcon(key)}
-                           </Space>
-                           <Space
-                              style={{
-                                 display: "flex",
-                                 justifyContent: "center",
-                                 justifyItems: "center",
-                                 width: 140,
-                              }}
-                           >
-                              {value}
-                              {key}
-                           </Space>
-                        </Space>
-                     )}
-                  </>
+                  <Space
+                     style={{
+                        width: "200px",
+                        height: 60,
+                        border: "1px solid gray",
+                        padding: 0,
+                     }}
+                     key={key}
+                  >
+                     <Space
+                        style={{
+                           width: "60px",
+                           height: 60,
+                           // border: "1px solid gray",
+                           backgroundColor: getBackgroundColor(key),
+                           display: "flex",
+                           justifyContent: "center",
+                           justifyItems: "center",
+                        }}
+                     >
+                        {getIcon(key)}
+                     </Space>
+                     <Space
+                        style={{
+                           display: "flex",
+                           justifyContent: "center",
+                           justifyItems: "center",
+                           width: 140,
+                        }}
+                     >
+                        {value}
+                        {key}
+                     </Space>
+                  </Space>
                ))}
             </Space>
             <div

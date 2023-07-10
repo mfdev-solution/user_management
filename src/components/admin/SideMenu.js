@@ -1,7 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from 'antd';
-import { SettingOutlined, AppstoreOutlined, CheckCircleOutlined, MoneyCollectOutlined, BarChartOutlined } from '@ant-design/icons';
+import {
+    AppstoreOutlined,
+    CheckCircleOutlined,
+    LineChartOutlined,
+    FileSearchOutlined,
+    MoneyCollectOutlined,
+    BarChartOutlined,
+    SafetyCertificateFilled,
+    UnorderedListOutlined,
+    FileTextOutlined,
+    FileDoneOutlined
+} from '@ant-design/icons';
 
 const { Sider } = Layout;
 function getItem(label, key, icon, children, type) {
@@ -15,23 +26,18 @@ function getItem(label, key, icon, children, type) {
     };
 }
 const items = [
-    getItem('Historiques', '4', <BarChartOutlined />),
-    getItem('Validation', 'sub1', <CheckCircleOutlined />, [
-        getItem('Demandes', '1'),
-        getItem('Suivi demandes', '2'),
-        getItem('gestion contrat', '3'),
-        getItem('Gestion payement', '7', <MoneyCollectOutlined />),
+    getItem('Historiques', '4', <BarChartOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />),
+    getItem('Validation stages', 'sub1', <CheckCircleOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />, [
+        getItem('Demandes externes', '1', <FileSearchOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />),
+        getItem('Suivi stagiaire', '2', <LineChartOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />),
+        getItem('gestion contrats', '3', <FileTextOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />),
+        getItem('Gestion paiement', '7', <MoneyCollectOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />),
     ]),
-    getItem('Demande interne', 'sub2', <AppstoreOutlined />, [
-        getItem('List Demandes', '5'),
-        getItem('Suivi prosition stage', '6'),
+    getItem('Demandes internes', 'sub2', <AppstoreOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />, [
+        getItem('List Demandes', '5', <UnorderedListOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />),
+        getItem('Suivi prosition stage', '6', <SafetyCertificateFilled style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />),
     ]),
-    getItem('Navigation Three', 'sub4', <SettingOutlined />, [
-        getItem('Option 9', '9'),
-        getItem('Option 10', '10'),
-        getItem('Option 11', '11'),
-        getItem('Option 12', '12'),
-    ]),
+    getItem('Attestation fin stage', '8', <FileDoneOutlined style={{ fontSize: 20, color: "rgb(45, 146, 142)" }} />),
 ];
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub4', "sub5"];
 export const SideMenu = ({ collapse }) => {
@@ -62,6 +68,8 @@ export const SideMenu = ({ collapse }) => {
             navigate("/gwte/suivi-demande")
         } else if (key === "7") {
             navigate("/gwte/payment");
+        } else if (key === "8") {
+            navigate("/gwte/attestation-fin-stage")
         }
     };
     const {
@@ -77,6 +85,7 @@ export const SideMenu = ({ collapse }) => {
                 left: 0,
                 top: 0,
                 height: '100vh',
+                width: "300px"
             }} >
             <div
                 style={{
@@ -87,6 +96,8 @@ export const SideMenu = ({ collapse }) => {
             />
             <Menu theme="dark" color="#FFF" openKeys={openKeys}
                 onOpenChange={onOpenChange}
-                onClick={({ key }) => handleMenuClick(key)} defaultSelectedKeys={['4']} mode="inline" items={items} />
+                onClick={({ key }) => handleMenuClick(key)}
+                defaultSelectedKeys={['4']}
+                mode="inline" items={items} />
         </Sider>)
 }

@@ -25,6 +25,7 @@ import { GestionDemandeIterne } from "./gwte/GestionDemandeIterne";
 import { AuthenticationComponent } from "../components/AuthenticationComponent";
 import { GestionPayement } from "../components/gwte/GestionPayement";
 import { GestionPaiementTabs, GestionTabs } from "./gwte/GestionPaiementTabs";
+import { GestionAttestationFinStage } from "./gwte/GestionAttestationFinStage";
 
 const UserRoute = () => {
    return (
@@ -82,6 +83,7 @@ const UserRoute = () => {
                      element={<GestionDemandeIterne />}
                   />
                   <Route path="payment" element={<GestionPaiementTabs />} />
+                  <Route path="attestation-fin-stage" element={<GestionAttestationFinStage/>} />
                   <Route path="*" element={<PageNotFound />} />
                </Route>
 

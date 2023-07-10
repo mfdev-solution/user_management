@@ -12,7 +12,8 @@ const ProfileView = () => {
    const [editing, setEditing] = useState(false);
    const [updatedStagiaire, setUpdatedStagiaire] = useState({});
    const getGerne = (genre) => {
-      switch (genre.toLowerCase()) {
+      genre = genre.toLowerCase();
+      switch (genre) {
          case "f":
             return "Femme";
          case "m":
@@ -269,7 +270,9 @@ const ProfileView = () => {
                            />
                         ) : (
                            <span className="profile-value" style={valueStyle}>
-                              {stagiaire.matricule}
+                              {stagiaire.matricule
+                                 ? stagiaire.matricule
+                                 : "matricule non attribué"}
                            </span>
                         )}
                      </div>

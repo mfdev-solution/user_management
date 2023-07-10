@@ -30,6 +30,16 @@ export const Test1 = () => {
       }
       return () => (flag.current = true);
    }, []);
+   const nbrMatriculed = () => {
+      const matricules = stagiaires.map(
+         (stagiaire) => stagiaire.matricule !== null
+      );
+      return {
+         mated: matricules.length,
+         unMated: stagiaires.length - matricules.length,
+      };
+   };
+
    const handleUpdate = (stagiaireparam) => {
       stagiaireparam.manager = null;
       stagiaireparam.structure = null;
@@ -192,6 +202,7 @@ export const Test1 = () => {
       console.log(value);
       setkeywordSh(value);
    };
+
    return (
       <>
          <div>
@@ -205,7 +216,7 @@ export const Test1 = () => {
                   color: "white",
                }}
             >
-               {" "}
+               {console.log(nbrMatriculed())}
                <Space style={{ fontSize: 17 }}>
                   <UnorderedListOutlined />
                   Suivis des stagiaire
@@ -245,13 +256,18 @@ export const Test1 = () => {
             </div>
             <Table
                loading={loading}
-               dataSource={sortedstagiaires.filter(
-                  (stg) =>
-                     stg.prenom
-                        .toLowerCase()
-                        .includes(keywordSh.toLowerCase()) ||
-                     stg.nom.toLowerCase().includes(keywordSh.toLowerCase())
-               )}
+               dataSource={sortedstagiaires
+                  .map((stagiaire) => ({
+                     ...stagiaire,
+                     key: stagiaire.id,
+                  }))
+                  .filter(
+                     (stg) =>
+                        stg.prenom
+                           .toLowerCase()
+                           .includes(keywordSh.toLowerCase()) ||
+                        stg.nom.toLowerCase().includes(keywordSh.toLowerCase())
+                  )}
                columns={columns}
                pagination={{
                   pageSize: 5,
@@ -263,3 +279,4 @@ export const Test1 = () => {
       </>
    );
 };
+
